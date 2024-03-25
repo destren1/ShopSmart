@@ -81,25 +81,19 @@ type EmitterEvent = {
 
 Класс Component предоставляет удобный инструментарий для работы с DOM-элементами. Он включает в себя следующие методы:
 
-- toggleClass(element: HTMLElement, className: string): Переключает класс className у указанного DOM-элемента element.
+- toggleClass(element: HTMLElement, className: string, force?: boolean): Переключает класс className у указанного DOM-элемента element.
 
-- setText(element: HTMLElement, text: string): Устанавливает текстовое содержимое text для указанного DOM-элемента element.
+- protected setText(element: HTMLElement, value: unknown): Устанавливает текстовое содержимое text для указанного DOM-элемента element.
 
-- setDisabled(element: HTMLElement, disabled: boolean): Устанавливает состояние блокировки (disabled) для указанного DOM-элемента element.
+- setDisabled(element: HTMLElement, state: boolean): Устанавливает состояние блокировки (disabled) для указанного DOM-элемента element.
 
-- setHidden(element: HTMLElement): Скрывает указанный DOM-элемент element.
+- protected setHidden(element: HTMLElement): Скрывает указанный DOM-элемент element.
 
-- setVisible(element: HTMLElement): Показывает указанный DOM-элемент element.
+- protected setVisible(element: HTMLElement): Показывает указанный DOM-элемент element.
 
-- setImage(element: HTMLImageElement, src: string, alt: string): Устанавливает изображение с источником src и альтернативным текстом alt для указанного элемента <img>.
+- protected setImage(element: HTMLImageElement, src: string, alt?: string): Устанавливает изображение с источником src и альтернативным текстом alt для указанного элемента <img>.
 
-- render(container: HTMLElement): HTMLElement: Рендерит элемент в указанный контейнер container и возвращает сам элемент.
-
-### Класс Model
-
-Класс Model является абстрактным и предоставляет базовый функционал для всех моделей данных. Он содержит следующий метод:
-
-- emitChanges(): Сообщает всем заинтересованным сторонам о том, что модель была изменена.
+- render(data?: Partial<T>): HTMLElement: Рендерит элемент в указанный контейнер container и возвращает сам элемент.
 
 ## Класс Api
 Реализован на основе типов:
