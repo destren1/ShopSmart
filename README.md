@@ -45,33 +45,37 @@ yarn build
 
 ### Класс EventEmitter
 Реализован на основе интерфейса:
+```
 interface IEvents {
     on<T extends object>(event: EventName, callback: (data: T) => void): void;
     emit<T extends object>(event: string, data?: T): void;
     trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void;
 }
+```
 И типов:
+```
 type EventName = string | RegExp;
 type Subscriber = Function;
 type EmitterEvent = {
     eventName: string,
     data: unknown
 };
+```
 
 Класс EventEmitter реализует паттерн "Наблюдатель" и обеспечивает механизм подписки на события, отписки от событий и уведомления подписчиков о наступлении событий. 
 Он предоставляет следующие методы:
 
-on<T extends object>(eventName: EventName, callback: (event: T) => void): Подписывает указанную функцию callback на событие с именем eventName.
+- on<T extends object>(eventName: EventName, callback: (event: T) => void): Подписывает указанную функцию callback на событие с именем eventName.
 
-off(eventName: EventName, callback: Subscriber): Отписывает указанную функцию callback от события с именем eventName.
+- off(eventName: EventName, callback: Subscriber): Отписывает указанную функцию callback от события с именем eventName.
 
-emit<T extends object>(eventName: string, data?: T): Уведомляет всех подписчиков о наступлении события с именем eventName, передавая им данные eventData, если они предоставлены.
+- emit<T extends object>(eventName: string, data?: T): Уведомляет всех подписчиков о наступлении события с именем eventName, передавая им данные eventData, если они предоставлены.
 
-onAll(callback: (event: EmitterEvent) => void): Подписывает указанную функцию callback на все события.
+- onAll(callback: (event: EmitterEvent) => void): Подписывает указанную функцию callback на все события.
 
-offAll(): Отписывает все функции от всех событий.
+- offAll(): Отписывает все функции от всех событий.
 
-trigger<T extends object>(eventName: string, context?: Partial<T>): Генерирует событие с именем eventName и передает ему данные eventData.
+- trigger<T extends object>(eventName: string, context?: Partial<T>): Генерирует событие с именем eventName и передает ему данные eventData.
 
 ### Класс Component
 
