@@ -81,40 +81,43 @@ type EmitterEvent = {
 
 Класс Component предоставляет удобный инструментарий для работы с DOM-элементами. Он включает в себя следующие методы:
 
-toggleClass(element: HTMLElement, className: string): Переключает класс className у указанного DOM-элемента element.
+- toggleClass(element: HTMLElement, className: string): Переключает класс className у указанного DOM-элемента element.
 
-setText(element: HTMLElement, text: string): Устанавливает текстовое содержимое text для указанного DOM-элемента element.
+- setText(element: HTMLElement, text: string): Устанавливает текстовое содержимое text для указанного DOM-элемента element.
 
-setDisabled(element: HTMLElement, disabled: boolean): Устанавливает состояние блокировки (disabled) для указанного DOM-элемента element.
+- setDisabled(element: HTMLElement, disabled: boolean): Устанавливает состояние блокировки (disabled) для указанного DOM-элемента element.
 
-setHidden(element: HTMLElement): Скрывает указанный DOM-элемент element.
+- setHidden(element: HTMLElement): Скрывает указанный DOM-элемент element.
 
-setVisible(element: HTMLElement): Показывает указанный DOM-элемент element.
+- setVisible(element: HTMLElement): Показывает указанный DOM-элемент element.
 
-setImage(element: HTMLImageElement, src: string, alt: string): Устанавливает изображение с источником src и альтернативным текстом alt для указанного элемента <img>.
+- setImage(element: HTMLImageElement, src: string, alt: string): Устанавливает изображение с источником src и альтернативным текстом alt для указанного элемента <img>.
 
-render(container: HTMLElement): HTMLElement: Рендерит элемент в указанный контейнер container и возвращает сам элемент.
+- render(container: HTMLElement): HTMLElement: Рендерит элемент в указанный контейнер container и возвращает сам элемент.
 
 ### Класс Model
 
 Класс Model является абстрактным и предоставляет базовый функционал для всех моделей данных. Он содержит следующий метод:
 
-emitChanges(): Сообщает всем заинтересованным сторонам о том, что модель была изменена.
+- emitChanges(): Сообщает всем заинтересованным сторонам о том, что модель была изменена.
 
 ## Класс Api
 Реализован на основе типов:
 
+```
 type ApiListResponse<Type> = {
     total: number,
     items: Type[]
 };
-
+```
+```
 type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
+```
 
 Класс Api отвечает за взаимодействие с сервером посредством отправки HTTP-запросов. Он предоставляет следующие методы:
 
-protected handleResponse(response: Response): Promise<object>: Отвечает за обработку ответа от сервера после выполнения HTTP-запроса. Он принимает объект Response, представляющий ответ сервера, и возвращает Promise, разрешающийся объектом, представляющим обработанные данные ответа.
+- protected handleResponse(response: Response): Promise<object>: Отвечает за обработку ответа от сервера после выполнения HTTP-запроса. Он принимает объект Response, представляющий ответ сервера, и возвращает Promise, разрешающийся объектом, представляющим обработанные данные ответа.
 
-get(url: string): Promise<any>: Выполняет GET запрос по указанному url и возвращает Promise с результатом запроса.
+- get(url: string): Promise<any>: Выполняет GET запрос по указанному url и возвращает Promise с результатом запроса.
 
-post(uri: string, data: object, method: ApiPostMethods = 'POST'): Выполняет POST запрос по указанному url с переданными данными data и возвращает Promise с результатом запроса.
+- post(uri: string, data: object, method: ApiPostMethods = 'POST'): Выполняет POST запрос по указанному url с переданными данными data и возвращает Promise с результатом запроса.
