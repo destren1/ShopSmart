@@ -115,3 +115,71 @@ type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 - get(url: string): Promise<any>: Выполняет GET запрос по указанному url и возвращает Promise с результатом запроса.
 
 - post(uri: string, data: object, method: ApiPostMethods = 'POST'): Выполняет POST запрос по указанному url с переданными данными data и возвращает Promise с результатом запроса.
+
+## Работа с данными
+
+## Класс WebLarekApi:
+WebLarekApi предназначен для получения данных карточек с сервера и отправки данных на сервер.
+
+Реализуется на основе интерфейса IWebLarekApi и типа productItem, который представляет структуру данных карточки:
+```
+interface IWebLarekApi {
+	getCardList():productItem[]
+	getCardById(id:string):productItem
+}
+```
+
+Предоставляет методы:
+- getCardList():productItem[] - Получает массив данных карточек с сервера и возвращает его. Каждый элемент массива представляет объект с данными карточки товара.
+
+- getCardById(id:string):productItem - Получает данные карточки товара по указанному идентификатору id с сервера и возвращает их.
+
+### Класс BasketModel:
+BasketModel отвечает за хранение данных корзины и предоставляет методы для работы с ней.
+
+Реализован на основе интерфейса:
+```
+interface IBasketModel {
+		basket: productItem[] = []
+		addToBasket(item: productItem): void
+		removeFromBasket(item: productItem): void
+		clearBasket(): void
+}
+```
+Также использован тип:
+```
+type productItem = {
+ 		id: string
+    description: string
+    image: string
+    title: string
+    category: string
+		price: number
+}
+```
+Методы и поля:
+
+- basket: productItem[] = [] - Поле для хранения элементов корзины. Это массив объектов productItem, каждый из которых представляет товар в корзине.
+
+- addToBasket(item: productItem) - Добавляет указанный товар item в корзину.
+
+- removeFromBasket(item: productItem) - Удаляет указанный товар item из корзины.
+
+- clearBasket() - Очищает корзину от всех товаров.
+
+#### Класс CatalogModel:
+CatalogModel отвечает за хранение данных каталога товаров и предоставляет методы для управления этими данными.
+
+Реализован на основе интерфейса и типа productItem:
+```
+interface ICatalogModel {
+		catalog: productItem[]
+		addToCatalog(items: productItem[]): void
+}
+```
+
+- catalog: productItem[] - Поле для хранения элементов каталога. Это массив объектов productItem, представляющих товары в каталоге.
+
+- addToCatalog(items: productItem[]): void - Добавляет указанные товары items в каталог.
+
+## Работа с отображением
