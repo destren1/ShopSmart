@@ -167,7 +167,7 @@ BasketModel отвечает за хранение данных корзины �
 
 ```
 interface IBasketModel {
-	basket: productItem[] = []
+	basket: productItem[]
 	addToBasket(item: productItem): void
 	removeFromBasket(item: productItem): void
 	clearBasket(): void
@@ -176,7 +176,7 @@ interface IBasketModel {
 
 Методы и поля:
 
-- basket: productItem[] = [] - Поле для хранения элементов корзины. Это массив объектов productItem, каждый из которых представляет товар в корзине.
+- basket: productItem[] - Поле для хранения элементов корзины. Это массив объектов productItem, каждый из которых представляет товар в корзине.
 
 - addToBasket(item: productItem) - Добавляет указанный товар item в корзину.
 
@@ -314,7 +314,7 @@ interface IBasket {
 	cardInstance: Card
 	template: HTMLElement
 	totalCost: string
-	totalCost(): string
+	counterTotalCost(): string
 }
 ```
 
@@ -328,7 +328,7 @@ interface IBasket {
 
 Методы:
 
-- totalCost(): string - метод для расчета общей стоимости корзины.Возвращает строку, представляющую общую стоимость корзины.
+- counterTotalCost(): string - метод для расчета общей стоимости корзины.Возвращает строку, представляющую общую стоимость корзины.
 
 ### Класс Form
 
@@ -426,7 +426,7 @@ interface ISuccess {
 	totalCost: string
 	buttonNext: HTMLButtonElement
 	close(): void
-	totalCost(): string
+	counterTotalCost(): string
 }
 ```
 
@@ -441,7 +441,7 @@ interface ISuccess {
 Методы:
 
 - close(): void - закрывает модальное окно по нажатию на кнопку.
-- totalCost(): string - высчитывает общую стоимость покупки. Возвращает строку, представляющую общую стоимость покупки.
+- counterTotalCost(): string - высчитывает общую стоимость покупки. Возвращает строку, представляющую общую стоимость покупки.
 
 ### Класс Page
 
@@ -464,8 +464,8 @@ type productItem = {
 interface IPage {
 	counter: HTMLElement
 	catalog: HTMLElement
-	counter(value: number): void
-	catalog(items: productItem[]):void
+	updateCounter(value: number): void
+	setCatalog(items: productItem[]): void
 }
 ```
 
@@ -479,3 +479,4 @@ interface IPage {
 Методы:
 
 - updateCounter(value: number): void - представляет метод для обновления счётчика корзины.
+- setCatalog(items: productItem[]): void - устанавливает содержимое поля catalog.
