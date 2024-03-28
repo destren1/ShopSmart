@@ -1,4 +1,4 @@
-export type productItem = {
+export type ProductItem = {
 	id: string;
 	description: string;
 	image: string;
@@ -8,20 +8,20 @@ export type productItem = {
 };
 
 export interface IWebLarekApi {
-	getCardList(): productItem[];
-	getCardById(id: string): productItem;
+	getCardList(): Promise<ProductItem[]>;
+	getCardById(id: string): Promise<ProductItem>;
 }
 
 export interface IBasketModel {
-	basket: productItem[];
-	addToBasket(item: productItem): void;
-	removeFromBasket(item: productItem): void;
+	basket: ProductItem[];
+	addToBasket(item: ProductItem): void;
+	removeFromBasket(id: string): void;
 	clearBasket(): void;
 }
 
 export interface ICatalogModel {
-	catalog: productItem[];
-	addToCatalog(items: productItem[]): void;
+	catalog: ProductItem[];
+	addToCatalog(items: ProductItem[]): void;
 }
 
 export interface ICard {
@@ -53,7 +53,7 @@ export interface IContentModal {
 }
 
 export interface IBasket {
-	cardInstance: Card;
+	cardInstance: ICard;
 	template: HTMLElement;
 	totalCost: string;
 	counterTotalCost(): string;
@@ -90,5 +90,5 @@ export interface IPage {
 	counter: HTMLElement;
 	catalog: HTMLElement;
 	updateCounter(value: number): void;
-	setCatalog(items: productItem[]): void;
+	setCatalog(items: ProductItem[]): void;
 }
