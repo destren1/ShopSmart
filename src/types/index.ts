@@ -25,21 +25,21 @@ export interface ICatalogModel {
 }
 
 export interface ICard {
-	template: HTMLElement;
-	Title: string;
-	Description?: string;
-	Image?: string;
-	Category: string;
-	Price: number;
-	Button?: string;
-	Index?: number;
-	SetTitle(value: string): void;
-	SetImage(value: string): void;
-	SetPrice(value: number): void;
-	SetDescription(value: string): void;
-	SetCategory(value: string): void;
-	SetButton(value: string): void;
-	SetIndex(value: number): void;
+	template: HTMLElement
+	title: string
+	description?: string
+	image?: string
+	category: string
+	price: number
+	button?: string
+	index?: number
+	setTitle(value: string): void
+	setImage(value: string): void
+	setPrice(value: number): void
+	setDescription(value: string): void
+	setCategory(value: string): void
+	setButton(value: string): void
+	setIndex(value: number): void
 }
 
 export interface IModal {

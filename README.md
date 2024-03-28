@@ -1,6 +1,7 @@
 # Проектная работа "Веб-ларек"
 
 Стек: HTML, SCSS, TS, Webpack
+Паттерн программирования: упрощённая версия архитектурного паттерна MVP
 
 Структура проекта:
 
@@ -215,20 +216,20 @@ CardModal наследует функциональность от класса 
 ```
 interface ICard {
 	template: HTMLElement
-	Title: string
-	Description?: string
-	Image?: string
-	Category: string
-	Price: number
-	Button?: string
-	Index?: number
-	SetTitle(value: string): void
-	SetImage(value: string): void
-	SetPrice(value: number): void
-	SetDescription(value: string): void
-	SetCategory(value: string): void
-	SetButton(value: string): void
-	SetIndex(value: number): void
+	title: string
+	description?: string
+	image?: string
+	category: string
+	price: number
+	button?: string
+	index?: number
+	setTitle(value: string): void
+	setImage(value: string): void
+	setPrice(value: number): void
+	setDescription(value: string): void
+	setCategory(value: string): void
+	setButton(value: string): void
+	setIndex(value: number): void
 }
 ```
 
@@ -236,24 +237,24 @@ interface ICard {
 
 Поля:
 
-- template: HTMLElement: Шаблон карточки
-- Title: string: Заголовок карточки.
-- Description?: string: Описание карточки (необязательное).
-- Image?: string: URL изображения для карточки (необязательное).
-- Category: string: Категория карточки.
-- Price: number: Цена карточки.
-- Button?: string: Текст кнопки карточки (необязательное).
-- Index?: number: Индекс карточки в массиве (необязательное).
+- template: HTMLElement: Шаблон карточки.
+- title: string: Заголовок карточки.
+- description?: string: Описание карточки (необязательное).
+- image?: string: URL изображения для карточки (необязательное).
+- category: string: Категория карточки.
+- price: number: Цена карточки.
+- button?: string: Текст кнопки карточки (необязательное).
+- index?: number: Индекс карточки в массиве (необязательное).
 
 Методы:
 
-- SetTitle(value: string): void: Устанавливает заголовок карточки.
-- SetImage(value: string): void: Устанавливает URL изображения для карточки.
-- SetPrice(value: number): void: Устанавливает цену карточки.
-- SetDescription(value: string): void: Устанавливает описание карточки.
-- SetCategory(value: string): void: Устанавливает категорию карточки.
-- SetButton(value: string): void: Устанавливает текст кнопки карточки.
-- SetIndex(value: number): void: Устанавливает индекс карточки в массиве.
+- setTitle(value: string): void: Устанавливает заголовок карточки.
+- setImage(value: string): void: Устанавливает URL изображения для карточки.
+- setPrice(value: number): void: Устанавливает цену карточки.
+- setDescription(value: string): void: Устанавливает описание карточки.
+- setCategory(value: string): void: Устанавливает категорию карточки.
+- setButton(value: string): void: Устанавливает текст кнопки карточки.
+- setIndex(value: number): void: Устанавливает индекс карточки в массиве.
 
 ### Класс Modal:
 
