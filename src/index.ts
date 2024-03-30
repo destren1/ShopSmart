@@ -9,14 +9,11 @@ import { cloneTemplate, ensureElement } from './utils/utils';
 import { EventEmitter } from './components/base/events';
 import { ContentModal } from './components/ContentModal';
 
-
-
 // Шаблоны
 const catalogCardTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 const previewCardTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
 
-
-const modal = ensureElement<HTMLDivElement>('#modal-container')
+const modal = ensureElement<HTMLDivElement>('#modal-container');
 
 const webLarekApi = new WebLarekApi(CDN_URL, API_URL);
 const catalogModel = new CatalogModel();
@@ -24,15 +21,24 @@ const basketModel = new BasketModel();
 const page = new Page();
 const eventEmitter = new EventEmitter();
 
-eventEmitter.on('Card:open',()=>{
-	const contentModal = new ContentModal(modal)
-	contentModal.show()
-})
+const contentModal = new ContentModal(modal, {
+	onClick: () => eventEmitter.emit('Modal:close'),
+});
+
+eventEmitter.on('Modal:close', () => {
+	contentModal.close();
+});
+
+eventEmitter.on('Card:open', () => {
+	contentModal.show();
+});
 
 webLarekApi.getCardList().then((cards) => {
 	catalogModel.addToCatalog(cards);
 	const renderedCards = catalogModel.catalog.map((card) => {
-		const catalogCard = new Card(catalogCardTemplate, {onClick: () => eventEmitter.emit('Card:open', card)});
+		const catalogCard = new Card(catalogCardTemplate, {
+			onClick: () => eventEmitter.emit('Card:open', card),
+		});
 		return catalogCard.render(card);
 	});
 	page.setCatalog(renderedCards);

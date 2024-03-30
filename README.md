@@ -221,7 +221,7 @@ Card представляет собой класс для создания ка
 Наследуется от класса Component:
 CardModal наследует функциональность от класса Component, что позволяет ему использовать методы для работы с DOM-элементами.
 
-Реализуется на основе интерфейса:
+Реализуется на основе интерфейсов:
 
 ```
 interface ICard {
@@ -237,6 +237,12 @@ interface ICard {
 }
 ```
 
+```
+interface IActions {
+	onClick(evt:MouseEvent): void;
+}
+```
+
 И предоставляет поля и методы:
 
 Поля:
@@ -247,7 +253,7 @@ interface ICard {
 - image?: HTMLImageElement: URL изображения для карточки (необязательное).
 - category: HTMLSpanElement: Категория карточки.
 - price: HTMLSpanElement: Цена карточки.
-- button?: HTMLButtonElement: Обёртка карточки.
+- button?: HTMLButtonElement: Кнопка у карточки (необязательное).
 - actions: IActions: Колбэк при клике.
 
 Методы:
@@ -258,14 +264,21 @@ interface ICard {
 
 Modal представляет собой класс абстрактный модального окна, который предоставляет методы для его открытия и закрытия.
 
-Реализуется на основе интерфейса:
+Реализуется на основе интерфейсов:
 
 ```
 interface IModal {
-	container: HTMLDivElement;
+	container: HTMLElement;
 	closeButton: HTMLElement
+	actions: IActions
 	show(): void
 	close(): void
+}
+```
+
+```
+interface IActions {
+	onClick(evt:MouseEvent): void;
 }
 ```
 
@@ -275,6 +288,7 @@ interface IModal {
 
 - container: HTMLDivElement - контейнер с модальным окном.
 - closeButton: HTMLElement - кнопка для закрытия модального окна.
+- actions: IActions - Колбэк при клике.
 
 Методы:
 
@@ -294,7 +308,7 @@ ContentModal наследует функциональность от класс
 
 ```
 interface IContentModal {
-	container: HTMLDivElement
+	container: HTMLElement
 }
 ```
 

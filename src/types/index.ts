@@ -8,7 +8,7 @@ export type ProductItem = {
 };
 
 export interface IActions {
-	onClick(): void;
+	onClick(evt:MouseEvent): void;
 }
 
 export interface IWebLarekApi {
@@ -41,14 +41,14 @@ export interface ICard {
 }
 
 export interface IModal {
-	container: HTMLDivElement;
+	container: HTMLElement;
 	closeButton: HTMLElement;
 	show(): void;
 	close(): void;
 }
 
 export interface IContentModal {
-	container: HTMLDivElement;
+	container: HTMLElement;
 }
 
 export interface IBasket {

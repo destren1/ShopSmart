@@ -1,13 +1,16 @@
-import { IModal } from '../../types';
+import { IActions, IModal } from '../../types';
 import { ensureElement } from '../../utils/utils';
 
 export abstract class Modal implements IModal {
-	container: HTMLDivElement;
+	container: HTMLElement;
 	closeButton: HTMLElement;
+	actions: IActions;
 
-	constructor(container: HTMLDivElement) {
+	constructor(container: HTMLElement, actions?: IActions) {
 		this.container = container;
-		this.closeButton = ensureElement('#modal__close', container);
+		this.closeButton = ensureElement('.modal__close', container);
+		this.actions = actions;
+		this.closeButton.addEventListener('click', this.actions.onClick);
 	}
 
 	show(): void {
