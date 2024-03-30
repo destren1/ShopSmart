@@ -1,3 +1,5 @@
+import { Component } from '../components/base/components';
+
 export type ProductItem = {
 	id: string;
 	description: string;
@@ -25,21 +27,13 @@ export interface ICatalogModel {
 }
 
 export interface ICard {
-	template: HTMLElement;
-	title: string;
-	description?: string;
-	image?: string;
-	category: string;
-	price: number;
-	button?: string;
-	index?: number;
-	setTitle(value: string): void;
-	setImage(value: string): void;
-	setPrice(value: number): void;
-	setDescription(value: string): void;
-	setCategory(value: string): void;
-	setButton(value: string): void;
-	setIndex(value: number): void;
+	container: HTMLElement
+	title: HTMLHeadingElement
+	description?: HTMLParagraphElement
+	image?: HTMLImageElement
+	category: HTMLSpanElement
+	price: HTMLSpanElement
+	render(data: ProductItem): HTMLElement
 }
 
 export interface IModal {
@@ -90,5 +84,5 @@ export interface IPage {
 	counter: HTMLElement;
 	catalog: HTMLElement;
 	updateCounter(value: number): void;
-	setCatalog(items: ProductItem[]): void;
+	setCatalog(items: HTMLElement[]): void;
 }

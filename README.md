@@ -158,7 +158,7 @@ type ProductItem = {
 
 Предоставляет поля и методы:
 
-  Поля:
+Поля:
 
 - cdn: string - используется для формирования полного пути к изображениям при их отображении в приложении.
 
@@ -225,21 +225,17 @@ CardModal наследует функциональность от класса 
 
 ```
 interface ICard {
-	template: HTMLElement
-	title: string
-	description?: string
-	image?: string
-	category: string
-	price: number
-	button?: string
-	index?: number
+	container: HTMLTemplateElement
+	title: HTMLHeadingElement
+	description?: HTMLParagraphElement
+	image?: HTMLImageElement
+	category: HTMLSpanElement
+	price: HTMLSpanElement
 	setTitle(value: string): void
-	setImage(value: string): void
 	setPrice(value: number): void
 	setDescription(value: string): void
 	setCategory(value: string): void
 	setButton(value: string): void
-	setIndex(value: number): void
 }
 ```
 
@@ -247,24 +243,20 @@ interface ICard {
 
 Поля:
 
-- template: HTMLElement: Шаблон карточки.
-- title: string: Заголовок карточки.
-- description?: string: Описание карточки (необязательное).
-- image?: string: URL изображения для карточки (необязательное).
-- category: string: Категория карточки.
-- price: number: Цена карточки.
-- button?: string: Текст кнопки карточки (необязательное).
-- index?: number: Индекс карточки в массиве (необязательное).
+- container: HTMLElement: Шаблон карточки.
+- title: HTMLHeadingElement: Заголовок карточки.
+- description?: HTMLParagraphElement: Описание карточки (необязательное).
+- image?: HTMLImageElement: URL изображения для карточки (необязательное).
+- category: HTMLSpanElement: Категория карточки.
+- price: HTMLSpanElement: Цена карточки.
 
 Методы:
 
 - setTitle(value: string): void: Устанавливает заголовок карточки.
-- setImage(value: string): void: Устанавливает URL изображения для карточки.
 - setPrice(value: number): void: Устанавливает цену карточки.
 - setDescription(value: string): void: Устанавливает описание карточки.
 - setCategory(value: string): void: Устанавливает категорию карточки.
-- setButton(value: string): void: Устанавливает текст кнопки карточки.
-- setIndex(value: number): void: Устанавливает индекс карточки в массиве.
+- render(data: ProductItem): HTMLElement: вовзращает готовую карточку.
 
 ### Класс Modal:
 
@@ -463,25 +455,14 @@ Page представляет собой класс для отображени�
 
 Наследует функциональность от класса EventEmitter, что позволяет ему использовать методы для работы с событиями.
 
-Реализуется на основе интерфейса IPage и типа ProductItem, который представляет структуру данных карточки:
-
-```
-type ProductItem = {
-	id: string
-  description: string
-  image: string
-  title: string
-  category: string
-	price: number
-}
-```
+Реализуется на основе интерфейса IPage:
 
 ```
 interface IPage {
 	counter: HTMLElement
 	catalog: HTMLElement
 	updateCounter(value: number): void
-	setCatalog(items: ProductItem[]): void
+	setCatalog(items: HTMLElement[]): void
 }
 ```
 
@@ -489,10 +470,10 @@ interface IPage {
 
 Поля:
 
-- counter: number - элемент HTML для отображения счётчика корзины.
-- catalog: HTMLElement[] - массив со всеми карточками.
+- counter: HTMLElement - элемент HTML для отображения счётчика корзины.
+- catalog: HTMLElement - массив со всеми карточками.
 
 Методы:
 
 - updateCounter(value: number): void - представляет метод для обновления счётчика корзины.
-- setCatalog(items: ProductItem[]): void - устанавливает содержимое поля catalog.
+- setCatalog(items: HTMLElement[]): void - устанавливает содержимое поля catalog.
