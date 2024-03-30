@@ -1,7 +1,8 @@
-import { ICard } from '../types/index';
+import { IActions, ICard } from '../types/index';
 import { Component } from '../components/base/components';
 import { ProductItem } from '../types/index';
-import { ensureElement, cloneTemplate } from '../utils/utils';``
+import { ensureElement, cloneTemplate } from '../utils/utils';
+import { EventEmitter } from './base/events';
 
 export class Card extends Component<ProductItem> implements ICard {
 	container: HTMLElement;
@@ -10,10 +11,14 @@ export class Card extends Component<ProductItem> implements ICard {
 	image?: HTMLImageElement;
 	category: HTMLSpanElement;
 	price: HTMLSpanElement;
+	button: HTMLButtonElement;
+	actions: IActions
 
-	constructor(container: HTMLTemplateElement) {
+	constructor(container: HTMLTemplateElement, actions?: IActions) {
 		super(container);
+		this.actions = actions
 		this.container = cloneTemplate(container);
+		console.log(container)
 		this.title = ensureElement<HTMLHeadingElement>(
 			'.card__title',
 			this.container
@@ -25,6 +30,8 @@ export class Card extends Component<ProductItem> implements ICard {
 			this.container
 		);
 		this.price = ensureElement<HTMLSpanElement>('.card__price', this.container);
+		this.button = this.container.querySelector('.gallery__item');
+		console.log(this.button)
 	}
 
 	render(data: ProductItem): HTMLElement {
@@ -38,6 +45,10 @@ export class Card extends Component<ProductItem> implements ICard {
 		if (this.description) {
 			this.setText(this.description, data.description);
 		}
+		if(this.actions?.onClick){
+		if(this.button){
+			this.button.addEventListener('click', this.actions.onClick)
+		}}
 		return this.container;
 	}
 }

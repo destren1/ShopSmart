@@ -231,11 +231,9 @@ interface ICard {
 	image?: HTMLImageElement
 	category: HTMLSpanElement
 	price: HTMLSpanElement
-	setTitle(value: string): void
-	setPrice(value: number): void
-	setDescription(value: string): void
-	setCategory(value: string): void
-	setButton(value: string): void
+	button?: HTMLButtonElement
+	actions: IActions
+	render(data: ProductItem): HTMLElement
 }
 ```
 
@@ -249,23 +247,22 @@ interface ICard {
 - image?: HTMLImageElement: URL изображения для карточки (необязательное).
 - category: HTMLSpanElement: Категория карточки.
 - price: HTMLSpanElement: Цена карточки.
+- button?: HTMLButtonElement: Обёртка карточки.
+- actions: IActions: Колбэк при клике.
 
 Методы:
 
-- setTitle(value: string): void: Устанавливает заголовок карточки.
-- setPrice(value: number): void: Устанавливает цену карточки.
-- setDescription(value: string): void: Устанавливает описание карточки.
-- setCategory(value: string): void: Устанавливает категорию карточки.
 - render(data: ProductItem): HTMLElement: вовзращает готовую карточку.
 
 ### Класс Modal:
 
-Modal представляет собой класс модального окна, который предоставляет методы для его открытия и закрытия.
+Modal представляет собой класс абстрактный модального окна, который предоставляет методы для его открытия и закрытия.
 
 Реализуется на основе интерфейса:
 
 ```
 interface IModal {
+	container: HTMLDivElement;
 	closeButton: HTMLElement
 	show(): void
 	close(): void
@@ -276,6 +273,7 @@ interface IModal {
 
 Поля:
 
+- container: HTMLDivElement - контейнер с модальным окном.
 - closeButton: HTMLElement - кнопка для закрытия модального окна.
 
 Методы:
@@ -296,13 +294,13 @@ ContentModal наследует функциональность от класс
 
 ```
 interface IContentModal {
-	template: HTMLElement
+	container: HTMLDivElement
 }
 ```
 
 Предоставляет поля:
 
-- template : HTMLElement - шаблон модального окна.
+- container : HTMLDivElement - контент модального окна.
 
 ### Класс Basket
 

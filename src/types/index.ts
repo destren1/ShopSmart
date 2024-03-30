@@ -1,5 +1,3 @@
-import { Component } from '../components/base/components';
-
 export type ProductItem = {
 	id: string;
 	description: string;
@@ -8,6 +6,10 @@ export type ProductItem = {
 	category: string;
 	price: number;
 };
+
+export interface IActions {
+	onClick(): void;
+}
 
 export interface IWebLarekApi {
 	getCardList(): Promise<ProductItem[]>;
@@ -27,23 +29,26 @@ export interface ICatalogModel {
 }
 
 export interface ICard {
-	container: HTMLElement
-	title: HTMLHeadingElement
-	description?: HTMLParagraphElement
-	image?: HTMLImageElement
-	category: HTMLSpanElement
-	price: HTMLSpanElement
-	render(data: ProductItem): HTMLElement
+	actions: IActions
+	container: HTMLElement;
+	title: HTMLHeadingElement;
+	description?: HTMLParagraphElement;
+	image?: HTMLImageElement;
+	category: HTMLSpanElement;
+	price: HTMLSpanElement;
+	button?: HTMLButtonElement;
+	render(data: ProductItem): HTMLElement;
 }
 
 export interface IModal {
+	container: HTMLDivElement;
 	closeButton: HTMLElement;
 	show(): void;
 	close(): void;
 }
 
 export interface IContentModal {
-	template: HTMLElement;
+	container: HTMLDivElement;
 }
 
 export interface IBasket {
