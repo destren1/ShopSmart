@@ -489,6 +489,7 @@ interface IPage {
 	counter: HTMLElement
 	catalog: HTMLElement
 	pageWrapper: HTMLElement
+	basketButton: HTMLButtonElement;
 	updateCounter(value: number): void
 	setCatalog(items: HTMLElement[]): void
 	lockPage(): void
@@ -503,6 +504,7 @@ interface IPage {
 - counter: HTMLElement - элемент HTML для отображения счётчика корзины.
 - catalog: HTMLElement - массив со всеми карточками.
 - pageWrapper: HTMLElement - оболочка контента страницы.
+	basketButton: HTMLButtonElement - кнопка открытия корзины.
 
 Методы:
 

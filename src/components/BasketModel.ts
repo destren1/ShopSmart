@@ -5,7 +5,9 @@ export class BasketModel implements IBasketModel {
 	basket: ProductItem[] = [];
 
 	addToBasket(item: ProductItem): void {
-		this.basket.push(item);
+		if (!this.basket.find((BasketItem) => BasketItem.id === item.id)) {
+			this.basket.push(item);
+		}
 	}
 
 	removeFromBasket(id: string): void {

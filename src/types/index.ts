@@ -94,8 +94,9 @@ export interface IPage {
 	counter: HTMLElement;
 	catalog: HTMLElement;
 	pageWrapper: HTMLElement;
+	basketButton: HTMLButtonElement;
 	updateCounter(): void;
 	setCatalog(items: HTMLElement[]): void;
-	lockPage(): void
-	unlockPage(): void
+	lockPage(): void;
+	unlockPage(): void;
 }
