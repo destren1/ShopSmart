@@ -488,8 +488,11 @@ Page представляет собой класс для отображени�
 interface IPage {
 	counter: HTMLElement
 	catalog: HTMLElement
+	pageWrapper: HTMLElement
 	updateCounter(value: number): void
 	setCatalog(items: HTMLElement[]): void
+	lockPage(): void
+	unlockPage(): void
 }
 ```
 
@@ -499,8 +502,11 @@ interface IPage {
 
 - counter: HTMLElement - элемент HTML для отображения счётчика корзины.
 - catalog: HTMLElement - массив со всеми карточками.
+- pageWrapper: HTMLElement - оболочка контента страницы.
 
 Методы:
 
 - updateCounter(value: number): void - представляет метод для обновления счётчика корзины.
 - setCatalog(items: HTMLElement[]): void - устанавливает содержимое поля catalog.
+- lockPage(): void - блокировка прокрутки страницы.
+- unlockPage(): void - разблокировка прокрутки страницы.

@@ -22,12 +22,14 @@ const basketModel = new BasketModel();
 const page = new Page();
 const eventEmitter = new EventEmitter();
 
+
 const contentModal = new ContentModal(modal, {
 	onClick: () => eventEmitter.emit('Modal:close'),
 });
 
 eventEmitter.on('Modal:close', () => {
 	contentModal.close();
+	page.unlockPage()
 });
 
 eventEmitter.on('Basket:addItem', (card: ProductItem) => {
@@ -49,6 +51,7 @@ eventEmitter.on('Card:open', (card: ProductItem) => {
 	});
 
 	contentModal.show();
+	page.lockPage()
 });
 
 webLarekApi.getCardList().then((cards) => {

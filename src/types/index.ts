@@ -93,6 +93,9 @@ export interface ISuccess {
 export interface IPage {
 	counter: HTMLElement;
 	catalog: HTMLElement;
+	pageWrapper: HTMLElement;
 	updateCounter(): void;
 	setCatalog(items: HTMLElement[]): void;
+	lockPage(): void
+	unlockPage(): void
 }
