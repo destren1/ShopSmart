@@ -30,10 +30,24 @@ eventEmitter.on('Modal:close', () => {
 	contentModal.close();
 });
 
+eventEmitter.on('Basket:addItem', (card: ProductItem) => {
+	page.updateCounter();
+});
+
 eventEmitter.on('Card:open', (card: ProductItem) => {
 	const previewCard = new Card(previewCardTemplate);
 	contentModal.clearModalContent();
-	contentModal.setContent(previewCard.render(card));
+	const renderedPreviewCard = previewCard.render(card);
+	contentModal.setContent(renderedPreviewCard);
+
+	const buttonAddToBasket = ensureElement<HTMLButtonElement>(
+		'.card__button',
+		renderedPreviewCard
+	);
+	contentModal.setButton(buttonAddToBasket, {
+		onClick: () => eventEmitter.emit('Basket:addItem', card),
+	});
+
 	contentModal.show();
 });
 

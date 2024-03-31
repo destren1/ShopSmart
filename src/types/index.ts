@@ -8,7 +8,7 @@ export type ProductItem = {
 };
 
 export interface IActions {
-	onClick(evt:MouseEvent): void;
+	onClick(evt: MouseEvent): void;
 }
 
 export interface IWebLarekApi {
@@ -29,7 +29,7 @@ export interface ICatalogModel {
 }
 
 export interface ICard {
-	actions: IActions
+	actions: IActions;
 	container: HTMLElement;
 	title: HTMLHeadingElement;
 	description?: HTMLParagraphElement;
@@ -48,10 +48,12 @@ export interface IModal {
 }
 
 export interface IContentModal {
-	container: HTMLElement
+	content: HTMLElement;
 	modalContent: HTMLElement;
-	setContent(content: HTMLElement): void
-	clearModalContent(): void
+	button: HTMLButtonElement;
+	setContent(content: HTMLElement): void;
+	setButton(button: HTMLButtonElement, actions: IActions): void;
+	clearModalContent(): void;
 }
 
 export interface IBasket {
@@ -91,6 +93,6 @@ export interface ISuccess {
 export interface IPage {
 	counter: HTMLElement;
 	catalog: HTMLElement;
-	updateCounter(value: number): void;
+	updateCounter(): void;
 	setCatalog(items: HTMLElement[]): void;
 }

@@ -7,6 +7,7 @@ import { Modal } from './common/Modal';
 export class ContentModal extends Modal implements IContentModal {
 	content: HTMLElement;
 	modalContent: HTMLElement;
+	button: HTMLButtonElement;
 
 	constructor(modalContainer: HTMLElement, actions?: IActions) {
 		super(modalContainer, actions);
@@ -20,6 +21,11 @@ export class ContentModal extends Modal implements IContentModal {
 
 	setContent(content: HTMLElement): void {
 		this.content = content;
+	}
+
+	setButton(button: HTMLButtonElement, actions: IActions):void {
+		this.button = button;
+		this.button.addEventListener('click', actions.onClick);
 	}
 
 	clearModalContent(): void {
