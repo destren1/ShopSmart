@@ -48,7 +48,10 @@ export interface IModal {
 }
 
 export interface IContentModal {
-	container: HTMLElement;
+	container: HTMLElement
+	modalContent: HTMLElement;
+	setContent(content: HTMLElement): void
+	clearModalContent(): void
 }
 
 export interface IBasket {

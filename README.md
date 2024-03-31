@@ -309,12 +309,23 @@ ContentModal наследует функциональность от класс
 ```
 interface IContentModal {
 	container: HTMLElement
+	modalContent: HTMLElement;
+	setContent(content: HTMLElement): void
+	clearModalContent(): void
 }
 ```
 
-Предоставляет поля:
+Предоставляет поля и методы:
 
-- container : HTMLDivElement - контент модального окна.
+Поля:
+
+- container: HTMLDivElement - контент для вставки в модальное окно.
+- modalContent: HTMLElement - модальное окно.
+
+Методы:
+
+- setContent(content: HTMLElement): void - устанавливает контент для вставки в модальное окно.
+- clearModalContent(): void - очищает контент в модальном окне.
 
 ### Класс Basket
 

@@ -8,6 +8,7 @@ import { Page } from './components/Page';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { EventEmitter } from './components/base/events';
 import { ContentModal } from './components/ContentModal';
+import { ProductItem } from './types';
 
 // Шаблоны
 const catalogCardTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
@@ -29,12 +30,16 @@ eventEmitter.on('Modal:close', () => {
 	contentModal.close();
 });
 
-eventEmitter.on('Card:open', () => {
+eventEmitter.on('Card:open', (card: ProductItem) => {
+	const previewCard = new Card(previewCardTemplate);
+	contentModal.clearModalContent();
+	contentModal.setContent(previewCard.render(card));
 	contentModal.show();
 });
 
 webLarekApi.getCardList().then((cards) => {
 	catalogModel.addToCatalog(cards);
+
 	const renderedCards = catalogModel.catalog.map((card) => {
 		const catalogCard = new Card(catalogCardTemplate, {
 			onClick: () => eventEmitter.emit('Card:open', card),
