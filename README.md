@@ -344,9 +344,10 @@ ContentModal наследует функциональность от класс
 ```
 interface IBasket {
 	cardInstance: Card
-	template: HTMLElement
-	totalCost: string
-	counterTotalCost(): string
+	basket: HTMLElement
+	cardBasket: HTMLElement
+	totalCost: HTMLElement
+	counterTotalCost(): void
 }
 ```
 
@@ -354,13 +355,14 @@ interface IBasket {
 
 Поля:
 
-- cardInstance: Card - экземпляр класса Card
-- template : HTMLElement - шаблон модального окна с корзиной.
-- totalCost: string - общая стоимость корзины
+- cardInstance: Card - экземпляр класса Card.
+- basket : HTMLElement - контент шаблона модального окна с корзиной.
+- cardBasket: HTMLElement - контент шаблона карточки для корзины.
+- totalCost: string - общая стоимость корзины.
 
 Методы:
 
-- counterTotalCost(): string - метод для расчета общей стоимости корзины.Возвращает строку, представляющую общую стоимость корзины.
+- counterTotalCost(): void - метод для расчета общей стоимости корзины.
 
 ### Класс Form
 
@@ -504,7 +506,7 @@ interface IPage {
 - counter: HTMLElement - элемент HTML для отображения счётчика корзины.
 - catalog: HTMLElement - массив со всеми карточками.
 - pageWrapper: HTMLElement - оболочка контента страницы.
-	basketButton: HTMLButtonElement - кнопка открытия корзины.
+  basketButton: HTMLButtonElement - кнопка открытия корзины.
 
 Методы:
 

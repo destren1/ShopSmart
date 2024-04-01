@@ -58,9 +58,10 @@ export interface IContentModal {
 
 export interface IBasket {
 	cardInstance: ICard;
-	template: HTMLElement;
-	totalCost: string;
-	counterTotalCost(): string;
+	basket: HTMLElement;
+	cardBasket: HTMLElement;
+	totalCost: HTMLElement;
+	counterTotalCost(): void;
 }
 
 export interface IForm {
