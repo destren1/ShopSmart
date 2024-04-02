@@ -14,6 +14,12 @@ export class BasketModel implements IBasketModel {
 		this.basket.filter((card) => card.id !== id);
 	}
 
+	getTotalCost():number {
+		return this.basket.reduce((total,amount)=>{
+			return total + amount.price
+		},0)
+	}
+
 	clearBasket(): void {
 		this.basket = [];
 	}

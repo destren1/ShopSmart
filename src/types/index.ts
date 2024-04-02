@@ -1,3 +1,5 @@
+import { BasketModel } from '../components/BasketModel';
+
 export type ProductItem = {
 	id: string;
 	description: string;
@@ -57,11 +59,15 @@ export interface IContentModal {
 }
 
 export interface IBasket {
-	cardInstance: ICard;
 	basket: HTMLElement;
-	cardBasket: HTMLElement;
-	totalCost: HTMLElement;
-	counterTotalCost(): void;
+	basketPrice: HTMLElement;
+	cardBasketTemplate: HTMLTemplateElement;
+	cardsBasket: HTMLElement[];
+	basketList: HTMLElement;
+	basketModel: BasketModel;
+	counterTotalCost(cardPrice: number): void;
+	updateBasket(): void;
+	setCards(items: HTMLElement[]): void;
 }
 
 export interface IForm {

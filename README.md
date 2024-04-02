@@ -343,11 +343,15 @@ ContentModal наследует функциональность от класс
 
 ```
 interface IBasket {
-	cardInstance: Card
-	basket: HTMLElement
-	cardBasket: HTMLElement
-	totalCost: HTMLElement
-	counterTotalCost(): void
+	basket: HTMLElement;
+	basketPrice: HTMLElement;
+	cardBasketTemplate: HTMLTemplateElement;
+	cardsBasket: HTMLElement[];
+	basketList: HTMLElement;
+	basketModel: BasketModel;
+	counterTotalCost(basketCard:HTMLElement): void;
+	updateBasket(): void;
+	setCards(items: HTMLElement[]): void;
 }
 ```
 
@@ -355,14 +359,18 @@ interface IBasket {
 
 Поля:
 
-- cardInstance: Card - экземпляр класса Card.
-- basket : HTMLElement - контент шаблона модального окна с корзиной.
-- cardBasket: HTMLElement - контент шаблона карточки для корзины.
-- totalCost: string - общая стоимость корзины.
+- basket: HTMLElement - корзина.
+- basketPrice: HTMLElement - общая стоимость корзины.
+- cardBasketTemplate: HTMLTemplateElement - шаблон корзины.
+- cardsBasket: HTMLElement[] - массив готовых карточек корзины.
+- basketList: HTMLElement - список для карточек.
+- basketModel: BasketModel - экземпляр класса BasketModel.
 
 Методы:
 
-- counterTotalCost(): void - метод для расчета общей стоимости корзины.
+- counterTotalCost(cardPrice: number): void - метод для расчета общей стоимости корзины.
+- setCards(items: HTMLElement[]): void - устанавливает карточки в корзину.
+- updateBasket(): void - обновляет содержимое корзины.
 
 ### Класс Form
 

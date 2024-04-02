@@ -9,15 +9,19 @@ import { cloneTemplate, ensureElement } from './utils/utils';
 import { EventEmitter } from './components/base/events';
 import { ContentModal } from './components/ContentModal';
 import { ProductItem } from './types';
+import { Basket } from './components/Basket';
 
 // Шаблоны и константы
 const catalogCardTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
 const previewCardTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
 const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
+const cardBasketTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
 const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
 const contactsTemplate = ensureElement<HTMLTemplateElement>('#contacts');
 
 const modal = ensureElement<HTMLDivElement>('#modal-container');
+const basketContent = cloneTemplate(basketTemplate);
+const orderContent = cloneTemplate(orderTemplate);
 
 // Экземпляры классов
 const webLarekApi = new WebLarekApi(CDN_URL, API_URL);
@@ -33,8 +37,33 @@ const contentModal = new ContentModal(modal, {
 	onClick: () => eventEmitter.emit('Modal:close'),
 });
 
+// Действие открытия модального окна с формой доставки.
+eventEmitter.on('DeliveryForm:open', () => {
+	console.log('что-то');
+	contentModal.clearModalContent();
+	contentModal.setContent(orderContent);
+});
+
+// Действие удаления карточки в корзине по клику.
+eventEmitter.on('Card:delete', () => {
+	console.log('удалил'); // доделать, клик проходит. Мб сюда как-то айди карточки передавать по которой клик прошел
+});
+
+
+const basket = new Basket(
+	basketTemplate,
+	basketModel,
+	{ onClick: () => eventEmitter.emit('DeliveryForm:open') },
+	eventEmitter
+);
+
 // Действие при нажатии на корзину
 eventEmitter.on('Basket:open', () => {
+	const basketList = basketContent.querySelector('.basket__list');
+	console.log(basket.cardsBasket)
+	console.log(basket.basketList)
+	basketList.append(basket.basketList);
+	contentModal.setContent(basketContent);
 	contentModal.show();
 });
 
@@ -42,13 +71,19 @@ eventEmitter.on('Basket:open', () => {
 eventEmitter.on('Modal:close', () => {
 	contentModal.close();
 	page.unlockPage();
+	contentModal.clearModalContent();
 });
 
 // Действие при нажатии на кнопку "В корзину"
 eventEmitter.on('Basket:addItem', (card: ProductItem) => {
 	basketModel.addToBasket(card);
+	basket.updateBasket();
 	page.updateCounter();
 	contentModal.close();
+	page.unlockPage();
+	contentModal.clearModalContent();
+	basket.counterTotalCost(); // не работает, но при этом подсчёт в консоли идёт, но на странице это число не отображается
+	basket.total = basketModel.getTotalCost();
 });
 
 // Действие при открытии карточки
