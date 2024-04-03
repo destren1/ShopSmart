@@ -51,6 +51,8 @@ yarn build
 
 ### Класс EventEmitter
 
+Класс EventEmitter реализует паттерн "Наблюдатель" и обеспечивает механизм подписки на события, отписки от событий и уведомления подписчиков о наступлении событий.
+
 Реализован на основе интерфейса:
 
 ```
@@ -72,40 +74,43 @@ type EmitterEvent = {
 };
 ```
 
-Класс EventEmitter реализует паттерн "Наблюдатель" и обеспечивает механизм подписки на события, отписки от событий и уведомления подписчиков о наступлении событий.
-Он предоставляет следующие методы:
+Предоставляет методы:
 
-- on<T extends object>(eventName: EventName, callback: (event: T) => void): Подписывает указанную функцию callback на событие с именем eventName.
+- `on<T extends object>(eventName: EventName, callback: (event: T) => void)` - Подписывает указанную функцию callback на событие с именем eventName.
 
-- off(eventName: EventName, callback: Subscriber): Отписывает указанную функцию callback от события с именем eventName.
+- `off(eventName: EventName, callback: Subscriber)` - Отписывает указанную функцию callback от события с именем eventName.
 
-- emit<T extends object>(eventName: string, data?: T): Уведомляет всех подписчиков о наступлении события с именем eventName, передавая им данные eventData, если они предоставлены.
+- `emit<T extends object>(eventName: string, data?: T)` - Уведомляет всех подписчиков о наступлении события с именем eventName, передавая им данные eventData, если они предоставлены.
 
-- onAll(callback: (event: EmitterEvent) => void): Подписывает указанную функцию callback на все события.
+- `onAll(callback: (event: EmitterEvent) => void)` - Подписывает указанную функцию callback на все события.
 
-- offAll(): Отписывает все функции от всех событий.
+- `offAll()` - Отписывает все функции от всех событий.
 
-- trigger<T extends object>(eventName: string, context?: Partial<T>): Генерирует событие с именем eventName и передает ему данные eventData.
+- `trigger<T extends object>(eventName: string, context?: Partial<T>)` - Генерирует событие с именем eventName и передает ему данные eventData.
 
 ### Класс Component
 
-Класс Component предоставляет удобный инструментарий для работы с DOM-элементами. Он включает в себя следующие методы:
+Класс Component предоставляет удобный инструментарий для работы с DOM-элементами. 
 
-- toggleClass(element: HTMLElement, className: string, force?: boolean): Переключает класс className у указанного DOM-элемента element.
+Предоставляет методы:
 
-- protected setText(element: HTMLElement, value: unknown): Устанавливает текстовое содержимое text для указанного DOM-элемента element.
+- `toggleClass(element: HTMLElement, className: string, force?: boolean)` - Переключает класс className у указанного DOM-элемента element.
 
-- setDisabled(element: HTMLElement, state: boolean): Устанавливает состояние блокировки (disabled) для указанного DOM-элемента element.
+- `protected setText(element: HTMLElement, value: unknown)` - Устанавливает текстовое содержимое text для указанного DOM-элемента element.
 
-- protected setHidden(element: HTMLElement): Скрывает указанный DOM-элемент element.
+- `setDisabled(element: HTMLElement, state: boolean)` - Устанавливает состояние блокировки (disabled) для указанного DOM-элемента element.
 
-- protected setVisible(element: HTMLElement): Показывает указанный DOM-элемент element.
+- `protected setHidden(element: HTMLElement)` - Скрывает указанный DOM-элемент element.
 
-- protected setImage(element: HTMLImageElement, src: string, alt?: string): Устанавливает изображение с источником src и альтернативным текстом alt для указанного элемента <img>.
+- `protected setVisible(element: HTMLElement)` - Показывает указанный DOM-элемент element.
 
-- render(data?: Partial<T>): HTMLElement: Рендерит элемент в указанный контейнер container и возвращает сам элемент.
+- `protected setImage(element: HTMLImageElement, src: string, alt?: string)` - Устанавливает изображение с источником src и альтернативным текстом alt для указанного элемента <img>.
+
+- `render(data?: Partial<T>)` - HTMLElement: Рендерит элемент в указанный контейнер container и возвращает сам элемент.
 
 ## Класс Api
+
+Класс Api отвечает за взаимодействие с сервером посредством отправки HTTP-запросов.
 
 Реализован на основе типов:
 
@@ -120,13 +125,13 @@ type ApiListResponse<Type> = {
 type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 ```
 
-Класс Api отвечает за взаимодействие с сервером посредством отправки HTTP-запросов. Он предоставляет следующие методы:
+Предоставляет методы:
 
-- protected handleResponse(response: Response): Promise<object>: Отвечает за обработку ответа от сервера после выполнения HTTP-запроса. Он принимает объект Response, представляющий ответ сервера, и возвращает Promise, разрешающийся объектом, представляющим обработанные данные ответа.
+- `protected handleResponse(response: Response): Promise<object>` - Отвечает за обработку ответа от сервера после выполнения HTTP-запроса. Он принимает объект Response, представляющий ответ сервера, и возвращает Promise, разрешающийся объектом, представляющим обработанные данные ответа.
 
-- get(url: string): Promise<any>: Выполняет GET запрос по указанному url и возвращает Promise с результатом запроса.
+- `get(url: string): Promise<any>` - Выполняет GET запрос по указанному url и возвращает Promise с результатом запроса.
 
-- post(uri: string, data: object, method: ApiPostMethods = 'POST'): Выполняет POST запрос по указанному url с переданными данными data и возвращает Promise с результатом запроса.
+- `post(uri: string, data: object, method: ApiPostMethods = 'POST')` - Выполняет POST запрос по указанному url с переданными данными data и возвращает Promise с результатом запроса.
 
 ## Модели данных(Model)
 
@@ -161,11 +166,11 @@ type ProductItem = {
 
 Поля:
 
-- cdn: string - используется для формирования полного пути к изображениям при их отображении в приложении.
+- `cdn: string` - используется для формирования полного пути к изображениям при их отображении в приложении.
 
   Методы:
 
-- getCardList(): ProductItem[] - Получает массив данных карточек с сервера и возвращает его. Каждый элемент массива представляет объект с данными карточки товара.
+- `getCardList(): ProductItem[]` - Получает массив данных карточек с сервера и возвращает его. Каждый элемент массива представляет объект с данными карточки товара.
 
 ### Класс BasketModel:
 
@@ -182,15 +187,19 @@ interface IBasketModel {
 }
 ```
 
-Методы и поля:
+Предоставляет поля и методы:
 
-- basket: ProductItem[] - Поле для хранения элементов корзины. Это массив объектов ProductItem, каждый из которых представляет товар в корзине.
+Поля:
 
-- addToBasket(item: ProductItem) - Добавляет указанный товар item в корзину.
+- `basket: ProductItem[]` - Поле для хранения элементов корзины. Это массив объектов ProductItem, каждый из которых представляет товар в корзине.
 
-- removeFromBasket(id: string) - Удаляет указанный товар item из корзины.
+Методы:
 
-- clearBasket() - Очищает корзину от всех товаров.
+- `addToBasket(item: ProductItem): void` - Добавляет указанный товар item в корзину.
+
+- `removeFromBasket(id: string): void` - Удаляет указанный товар item из корзины.
+
+- `clearBasket(): void` - Очищает корзину от всех товаров.
 
 #### Класс CatalogModel:
 
@@ -205,11 +214,15 @@ interface ICatalogModel {
 }
 ```
 
-Методы и поля:
+Предоставляет поля и методы:
 
-- catalog: ProductItem[] - Поле для хранения элементов каталога. Это массив объектов ProductItem, представляющих товары в каталоге.
+Поля:
 
-- addToCatalog(items: ProductItem[]): void - Добавляет указанные товары items в каталог.
+- `catalog: ProductItem[]` - Поле для хранения элементов каталога. Это массив объектов ProductItem, представляющих товары в каталоге.
+
+Методы:
+
+- `addToCatalog(items: ProductItem[]): void` - Добавляет указанные товары items в каталог.
 
 ## Компоненты отображения(View)
 
@@ -244,22 +257,22 @@ interface IActions {
 }
 ```
 
-И предоставляет поля и методы:
+Предоставляет поля и методы:
 
 Поля:
 
-- container: HTMLElement: Шаблон карточки.
-- title: HTMLHeadingElement: Заголовок карточки.
-- description?: HTMLParagraphElement: Описание карточки (необязательное).
-- image?: HTMLImageElement: URL изображения для карточки (необязательное).
-- category: HTMLSpanElement: Категория карточки.
-- price: HTMLSpanElement: Цена карточки.
-- button?: HTMLButtonElement: Кнопка у карточки (необязательное).
-- actions: IActions: Колбэк при клике.
+- `container: HTMLElement` - Шаблон карточки.
+- `title: HTMLHeadingElement` - Заголовок карточки.
+- `description?: HTMLParagraphElement` - Описание карточки (необязательное).
+- `image?: HTMLImageElement` - URL изображения для карточки (необязательное).
+- `category: HTMLSpanElement` - Категория карточки.
+- `price: HTMLSpanElement` - Цена карточки.
+- `button?: HTMLButtonElement` - Кнопка у карточки (необязательное).
+- `actions: IActions` - Колбэк при клике.
 
 Методы:
 
-- render(data: ProductItem): HTMLElement: вовзращает готовую карточку.
+- `render(data: ProductItem): HTMLElement` - вовзращает готовую карточку.
 
 ### Класс Modal:
 
@@ -283,19 +296,19 @@ interface IActions {
 }
 ```
 
-И предоставляет следующие методы и поля:
+Предоставляет поля и методы:
 
 Поля:
 
-- container: HTMLDivElement - контейнер с модальным окном.
-- closeButton: HTMLElement - кнопка для закрытия модального окна.
-- actions: IActions - Колбэк при клике.
+- `container: HTMLDivElement` - контейнер с модальным окном.
+- `closeButton: HTMLElement` - кнопка для закрытия модального окна.
+- `actions: IActions` - Колбэк при клике.
 
 Методы:
 
-- show(): void - служит для открытия модального окна.
+- `show(): void` - служит для открытия модального окна.
 
-- close(): void - служит для закрытия модального окна.
+- `close(): void` - служит для закрытия модального окна.
 
 ### Класс ContentModal
 
@@ -322,16 +335,16 @@ interface IContentModal {
 
 Поля:
 
-- container: HTMLDivElement - контент для вставки в модальное окно.
-- modalContent: HTMLElement - модальное окно.
-- button: HTMLButtonElement - кнопка.
+- `container: HTMLDivElement` - контент для вставки в модальное окно.
+- `modalContent: HTMLElement` - модальное окно.
+- `button: HTMLButtonElement` - кнопка.
 
 Методы:
 
-- show(): void - расширяет метод show() родителя.
-- setContent(content: HTMLElement): void - устанавливает контент для вставки в модальное окно.
-- clearModalContent(): void - очищает контент в модальном окне.
-- setButton(button: HTMLButtonElement, actions: IActions): void - установка кнопки в поле button.
+- `show(): void` - расширяет метод show() родителя.
+- `setContent(content: HTMLElement): void` - устанавливает контент для вставки в модальное окно.
+- `clearModalContent(): void` - очищает контент в модальном окне.
+- `setButton(button: HTMLButtonElement, actions: IActions): void` - установка кнопки в поле button.
 
 ### Класс Basket
 
@@ -359,25 +372,25 @@ interface IBasket {
 }
 ```
 
-Предоставляет методы и поля:
+Предоставляет поля и методы:
 
 Поля:
 
-- basket: HTMLElement - корзина.
-- basketPrice: HTMLElement - общая стоимость корзины.
-- cardBasketTemplate: HTMLTemplateElement - шаблон корзины.
-- cardsBasket: HTMLElement[] - массив готовых карточек корзины.
-- basketList: HTMLElement - список для карточек.
-- basketModel: BasketModel - экземпляр класса BasketModel.
-- basketButton: HTMLElement - кнопка "Оформить".
-- eventEmitter: EventEmitter - экземпляр класса EventEmitter.
+- `basket: HTMLElement` - корзина.
+- `basketPrice: HTMLElement` - общая стоимость корзины.
+- `cardBasketTemplate: HTMLTemplateElement` - шаблон корзины.
+- `cardsBasket: HTMLElement[]` - массив готовых карточек корзины.
+- `basketList: HTMLElement` - список для карточек.
+- `basketModel: BasketModel` - экземпляр класса BasketModel.
+- `basketButton: HTMLElement` - кнопка "Оформить".
+- `eventEmitter: EventEmitter` - экземпляр класса EventEmitter.
 
 Методы:
 
-- counterTotalCost(cardPrice: number): void - метод для расчета общей стоимости корзины.
-- setCards(): void - устанавливает карточки в корзину.
-- updateBasket(): void - обновляет содержимое корзины.
-- changeButtonActivity(): void - меняет активность кнопки на основании содержимого.
+- `counterTotalCost(cardPrice: number): void` - метод для расчета общей стоимости корзины.
+- `setCards(): void` - устанавливает карточки в корзину.
+- `updateBasket(): void` - обновляет содержимое корзины.
+- `changeButtonActivity(): void` - меняет активность кнопки на основании содержимого.
 
 ### Класс ContactForm
 
@@ -399,14 +412,14 @@ interface IContactForm {
 
 Поля:
 
-- contactFormContent: HTMLElement - контент из шаблона contactFormTemplate;
-- inputEmail: HTMLInputElement - поле ввода почты.
-- inputPhone: HTMLInputElement - поле ввода номера телефона.
-- buttonPay: HTMLButtonElement - кнопка "Оплатить".
+- `contactFormContent: HTMLElement` - контент из шаблона contactFormTemplate;
+- `inputEmail: HTMLInputElement` - поле ввода почты.
+- `inputPhone: HTMLInputElement` - поле ввода номера телефона.
+- `buttonPay: HTMLButtonElement` - кнопка "Оплатить".
 
 Методы:
 
-- toggleButtonActivity(): void - переключает активность кнопки "Оплатить" в зависимости от условий.
+- `toggleButtonActivity(): void` - переключает активность кнопки "Оплатить" в зависимости от условий.
 
 ### Класс DeliveryForm
 
@@ -425,19 +438,19 @@ interface IDeliveryForm {
 }
 ```
 
-Предоставляет методы и поля:
+Предоставляет поля и методы:
 
 Поля:
 
-- deliveryFormContent: HTMLElement - контент из шаблона deliveryFormTemplate.
-- inputAddress: HTMLInputElement - поле ввода, содержащее адрес.
-- buttonCard: HTMLButtonElement - кнопка "Оплата картой"
-- buttonCash: HTMLButtonElement - кнопка "Оплата за наличные"
-- buttonNext: HTMLButtonElement - кнопка "Далее"
+- `deliveryFormContent: HTMLElement` - контент из шаблона deliveryFormTemplate.
+- `inputAddress: HTMLInputElement` - поле ввода, содержащее адрес.
+- `buttonCard: HTMLButtonElement` - кнопка "Оплата картой"
+- `buttonCash: HTMLButtonElement` - кнопка "Оплата за наличные"
+- `buttonNext: HTMLButtonElement` - кнопка "Далее"
 
 Методы:
 
-- toggleButtonActivity(): void - переключает активность кнопки "Далее" в зависимости от условий.
+- `toggleButtonActivity(): void` - переключает активность кнопки "Далее" в зависимости от условий.
 
 ### Класс Success
 
@@ -454,17 +467,17 @@ interface ISuccess {
 }
 ```
 
-Предоставляет методы и поля:
+Предоставляет поля и методы:
 
 Поля:
 
-- successContent: HTMLElement - контент из шаблона SuccessTemplate;
-- button: HTMLButtonElement - кнопка "За новыми покупками!"
-- orderSuccessDescription: HTMLParagraphElement - общая стоимость корзины.
+- `successContent: HTMLElement` - контент из шаблона SuccessTemplate;
+- `button: HTMLButtonElement` - кнопка "За новыми покупками!"
+- `orderSuccessDescription: HTMLParagraphElement` - общая стоимость корзины.
 
 Методы:
 
-- setOrderDescription(sum:HTMLElement): void - устанавливает суммарную стоимость товаров.
+- `setOrderDescription(sum:HTMLElement): void` - устанавливает суммарную стоимость товаров.
 
 ### Класс Page
 
@@ -485,21 +498,21 @@ interface IPage {
 }
 ```
 
-Предоставляет методы и поля:
+Предоставляет поля и методы:
 
 Поля:
 
-- counter: HTMLElement - элемент HTML для отображения счётчика корзины.
-- catalog: HTMLElement - массив со всеми карточками.
-- pageWrapper: HTMLElement - оболочка контента страницы.
-  basketButton: HTMLButtonElement - кнопка открытия корзины.
+- `counter: HTMLElement` - элемент HTML для отображения счётчика корзины.
+- `catalog: HTMLElement` - массив со всеми карточками.
+- `pageWrapper: HTMLElement` - оболочка контента страницы.
+- `basketButton: HTMLButtonElement` - кнопка открытия корзины.
 
 Методы:
 
-- updateCounter(value: number): void - представляет метод для обновления счётчика корзины.
-- setCatalog(items: HTMLElement[]): void - устанавливает содержимое поля catalog.
-- lockPage(): void - блокировка прокрутки страницы.
-- unlockPage(): void - разблокировка прокрутки страницы.
+- `updateCounter(value: number): void` - представляет метод для обновления счётчика корзины.
+- `setCatalog(items: HTMLElement[]): void` - устанавливает содержимое поля catalog.
+- `lockPage(): void` - блокировка прокрутки страницы.
+- `unlockPage(): void` - разблокировка прокрутки страницы.
 
 ## Компоненты представления(Presenter)
 
@@ -513,7 +526,7 @@ interface IPage {
 - `'Modal:close'` - Закрытие модального окна.
 - `'Basket:addItem'` - Добавление товара в корзину.
 - `'Basket:open'` - Открытие корзины.
-- `'Card:delete'`: Удаление товара из корзины.
+- `'Card:delete'` - Удаление товара из корзины.
 - `'DeliveryForm:open'` - Открытие формы доставки.
 - `'Button-card:active'` - Активация кнопки оплаты картой.
 - `'Button-cash:active'` - Активация кнопки оплаты наличными.
