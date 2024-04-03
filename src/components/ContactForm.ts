@@ -1,7 +1,7 @@
 import { IActions, IContactForm } from '../types';
 import { cloneTemplate, ensureElement } from '../utils/utils';
 
-export class ContactForm {
+export class ContactForm implements IContactForm {
 	contactFormContent: HTMLElement;
 	inputEmail: HTMLInputElement;
 	inputPhone: HTMLInputElement;

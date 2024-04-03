@@ -33,15 +33,9 @@ export class Basket extends Component<HTMLElement> {
 		console.log(this.basketButton);
 		if (this.basket) {
 			this.basketButton.addEventListener(
-				'click',
-				this.handleButtonClick.bind(this)
+				'click', actions.onClick
 			);
 		}
-		console.log(this.basketButton.onclick);
-	}
-
-	handleButtonClick() {
-		console.log('click');
 	}
 
 	setCards(): void {
@@ -49,6 +43,7 @@ export class Basket extends Component<HTMLElement> {
 			this.basketList.removeChild(this.basketList.lastChild);
 		}
 		console.log(`список карточек ${this.cardsBasket}`)
+		console.log(this.cardsBasket)
 		this.cardsBasket.forEach((item) => {
 			this.basketList.append(item);
 		});
@@ -71,7 +66,6 @@ export class Basket extends Component<HTMLElement> {
 			totalCost += item.price;
 		});
 		this.basketPrice.textContent = `${totalCost} синапсов`;
-		console.log(this.basketPrice);
 	}
 
 	set total(total: number) {

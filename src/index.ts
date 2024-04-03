@@ -10,6 +10,8 @@ import { EventEmitter } from './components/base/events';
 import { ContentModal } from './components/ContentModal';
 import { ProductItem } from './types';
 import { Basket } from './components/Basket';
+import { DeliveryForm } from './components/DeliveryForm';
+import { ContactForm } from './components/ContactForm';
 
 // Шаблоны и константы
 const catalogCardTemplate = ensureElement<HTMLTemplateElement>('#card-catalog');
@@ -36,19 +38,56 @@ const eventEmitter = new EventEmitter();
 const contentModal = new ContentModal(modal, {
 	onClick: () => eventEmitter.emit('Modal:close'),
 });
+const deliveryForm = new DeliveryForm(
+	orderTemplate,
+	{ onClick: () => eventEmitter.emit('Button-card:active') },
+	{ onClick: () => eventEmitter.emit('Button-cash:active') },
+	{ onInput: () => eventEmitter.emit('Input:change') },
+	{ onClick: () => eventEmitter.emit('ContactForm:open') }
+);
+const contactForm = new ContactForm(contactsTemplate, {
+	onClick: () => eventEmitter.emit('Success:open'),
+});
+
+//
+eventEmitter.on('Input:change', () => {
+	deliveryForm.toggleButtonActivity();
+});
+
+// Действие открытия модального окна с формой контактов.
+eventEmitter.on('ContactForm:open', () => {
+	contentModal.clearModalContent();
+	contentModal.setContent(contactForm.contactFormContent);
+	contentModal.show();
+});
+
+// Действие добавления 'класса активности' кнопке buttonCard
+eventEmitter.on('Button-card:active', () => {
+	if (!deliveryForm.buttonCash.classList.contains('button_alt-active')) {
+		deliveryForm.buttonCard.classList.toggle('button_alt-active');
+	}
+	deliveryForm.toggleButtonActivity();
+});
+
+// Действие добавления 'класса активности' кнопке buttonCash
+eventEmitter.on('Button-cash:active', () => {
+	if (!deliveryForm.buttonCard.classList.contains('button_alt-active')) {
+		deliveryForm.buttonCash.classList.toggle('button_alt-active');
+	}
+	deliveryForm.toggleButtonActivity();
+});
 
 // Действие открытия модального окна с формой доставки.
 eventEmitter.on('DeliveryForm:open', () => {
-	console.log('что-то');
 	contentModal.clearModalContent();
-	contentModal.setContent(orderContent);
+	contentModal.setContent(deliveryForm.deliveryFormContent);
+	contentModal.show();
 });
 
 // Действие удаления карточки в корзине по клику.
 eventEmitter.on('Card:delete', () => {
 	console.log('удалил'); // доделать, клик проходит. Мб сюда как-то айди карточки передавать по которой клик прошел
 });
-
 
 const basket = new Basket(
 	basketTemplate,
@@ -59,11 +98,7 @@ const basket = new Basket(
 
 // Действие при нажатии на корзину
 eventEmitter.on('Basket:open', () => {
-	const basketList = basketContent.querySelector('.basket__list');
-	console.log(basket.cardsBasket)
-	console.log(basket.basketList)
-	basketList.append(basket.basketList);
-	contentModal.setContent(basketContent);
+	contentModal.setContent(basket.basket);
 	contentModal.show();
 });
 
@@ -82,7 +117,7 @@ eventEmitter.on('Basket:addItem', (card: ProductItem) => {
 	contentModal.close();
 	page.unlockPage();
 	contentModal.clearModalContent();
-	basket.counterTotalCost(); // не работает, но при этом подсчёт в консоли идёт, но на странице это число не отображается
+	basket.counterTotalCost();
 	basket.total = basketModel.getTotalCost();
 });
 

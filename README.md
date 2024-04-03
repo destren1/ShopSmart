@@ -308,9 +308,10 @@ ContentModal наследует функциональность от класс
 
 ```
 interface IContentModal {
-	content: HTMLElement
+	content: HTMLElement;
 	modalContent: HTMLElement;
 	button: HTMLButtonElement;
+	show: void;
 	setContent(content: HTMLElement): void
 	setButton(button: HTMLButtonElement, actions: IActions): void
 	clearModalContent(): void
@@ -327,6 +328,7 @@ interface IContentModal {
 
 Методы:
 
+- show(): void - расширяет метод show() родителя.
 - setContent(content: HTMLElement): void - устанавливает контент для вставки в модальное окно.
 - clearModalContent(): void - очищает контент в модальном окне.
 - setButton(button: HTMLButtonElement, actions: IActions): void - установка кнопки в поле button.
@@ -335,9 +337,8 @@ interface IContentModal {
 
 Basket представляет собой класс, который принимает шаблон (template) модального окна корзиной и предоставляет методы для работы с ней.
 
-Наследуется от класса Component и EventEmitter:
+Наследуется от класса Component:
 ContentModal наследует функциональность от класса Component, что позволяет ему использовать методы для работы с DOM-элементами.
-Наследует функциональность от класса EventEmitter, что позволяет ему использовать методы для работы с событиями.
 
 Реализуется на основе интерфейса:
 
@@ -349,9 +350,11 @@ interface IBasket {
 	cardsBasket: HTMLElement[];
 	basketList: HTMLElement;
 	basketModel: BasketModel;
+	basketButton: HTMLElement;
+	eventEmitter: EventEmitter;
 	counterTotalCost(basketCard:HTMLElement): void;
 	updateBasket(): void;
-	setCards(items: HTMLElement[]): void;
+	setCards(): void;
 }
 ```
 
@@ -365,79 +368,52 @@ interface IBasket {
 - cardsBasket: HTMLElement[] - массив готовых карточек корзины.
 - basketList: HTMLElement - список для карточек.
 - basketModel: BasketModel - экземпляр класса BasketModel.
+- basketButton: HTMLElement - кнопка "Оформить".
+- eventEmitter: EventEmitter - экземпляр класса EventEmitter.
 
 Методы:
 
 - counterTotalCost(cardPrice: number): void - метод для расчета общей стоимости корзины.
-- setCards(items: HTMLElement[]): void - устанавливает карточки в корзину.
+- setCards(): void - устанавливает карточки в корзину.
 - updateBasket(): void - обновляет содержимое корзины.
-
-### Класс Form
-
-Form представляет собой абстрактный класс, который предоставляет методы для работы с модальными окнами содержащими формы.
-
-Наследуется от класса Component и EventEmitter:
-ContentModal наследует функциональность от класса Component, что позволяет ему использовать методы для работы с DOM-элементами.
-Наследует функциональность от класса EventEmitter, что позволяет ему использовать методы для работы с событиями.
-
-Реализуется на основе интерфейса:
-
-```
-interface IForm {
-	validate(): void
-	sumbit(): void
-}
-```
-
-Предоставляет методы:
-
-- validate(): void - служит для валидации полей формы.
-- submit(): void - служит для подтверждения данных по нажатию на кнопку, скрытия текущего попапа и открытия нового.
 
 ### Класс ContactForm
 
 ContactForm представляет собой класс, который принимает шаблон модального окна в качестве аргумента конструктора. Этот шаблон содержит формы для ввода контактной информации, такой как телефон и адрес электронной почты
 
-Наследуется от класса Form:
-ContactForm наследует функциональность от класса Form, что позволяет ему использовать методы для работы с формами.
 
 Реализуется на основе интерфейса:
 
 ```
 interface IContactForm {
-	template: HTMLElement
-	setPhone(value: string): void
-	setEmail(value: string): void
+	contactFormContent: HTMLElement;
+	inputEmail: HTMLInputElement;
+	inputPhone: HTMLInputElement;
+	buttonPay: HTMLButtonElement;
 }
 ```
 
-Предоставляет методы и поля:
+Предоставляет поля:
 
-Поля:
-
-- template : HTMLElement - шаблон модального окна с формами для ввода информации для контактирования.
-
-Методы:
-
-- setPhone(value: string): void - устаналивает значение в поле "телефон"
-- setEmail(value: string): void - устаналивает значение в поле "почта"
+- contactFormContent: HTMLElement - контент из шаблона contactFormTemplate;
+- inputEmail: HTMLInputElement - поле ввода почты.
+- inputPhone: HTMLInputElement - поле ввода номера телефона.
+- buttonPay: HTMLButtonElement - кнопка "Оплатить".
 
 ### Класс DeliveryForm
 
 DeliveryForm представляет собой класс, который принимает шаблон (template) модального окна с формой для указания адреса доставки, кнопки для выбора формы оплаты (карта или наличные) и предоставляет методы для работы с ними.
 
-Наследуется от класса Form:
-DeliveryForm наследует функциональность от класса Form, что позволяет ему использовать методы для работы с формами.
-
 Реализуется на основе интерфейса:
 
 ```
 interface IDeliveryForm {
-	template: HTMLElement
-	buttonCard: HTMLButtonElement
-	buttonCash: HTMLButtonElement
-	toggleButton(): void
-	setAddress(value: string): void
+	deliveryFormContent: HTMLElement;
+	inputAddress: HTMLInputElement;
+	buttonCard: HTMLButtonElement;
+	buttonCash: HTMLButtonElement;
+	buttonNext: HTMLButtonElement;
+	toggleButtonActivity(): void;
 }
 ```
 
@@ -445,14 +421,15 @@ interface IDeliveryForm {
 
 Поля:
 
-- template : HTMLElement - шаблон модального окна с формой для ввода адреса и кнопками для указания способа оплаты.
-- buttonCard: HTMLButtonElement - кнопка "оплата картой"
-- buttonCash: HTMLButtonElement - кнопка "оплата наличными"
+- deliveryFormContent: HTMLElement - контент из шаблона deliveryFormTemplate.
+- inputAddress: HTMLInputElement - поле ввода, содержащее адрес.
+- buttonCard: HTMLButtonElement - кнопка "Оплата картой"
+- buttonCash: HTMLButtonElement - кнопка  "Оплата за наличные"
+- buttonNext: HTMLButtonElement - кнопка "Далее"
 
 Методы:
 
-- toggleButton(): void - переключает доступность кнопок оплаты в зависимости от выбора.
-- setAddress(value: string): void - устаналивает значение в поле "адрес"
+- toggleButtonActivity(): void - переключает активность кнопки "Далее" в зависимости от условий.
 
 ### Класс Success
 
@@ -465,26 +442,23 @@ ContentModal наследует функциональность от класс
 
 ```
 interface ISuccess {
-	template: HTMLElement
-	totalCost: string
-	buttonNext: HTMLButtonElement
-	close(): void
-	counterTotalCost(): string
+	successContent: HTMLElement;
+	button: HTMLButtonElement;
+	orderSuccessDescription: HTMLParagraphElement;
 }
 ```
 
 Предоставляет методы и поля:
 
 Поля:
+- successContent: HTMLElement - контент из шаблона SuccessTemplate;
+- button: HTMLButtonElement - кнопка "За новыми покупками!"
+- orderSuccessDescription: HTMLParagraphElement - общая стоимость корзины.
 
-- template: HTMLElement - шаблон модального окна с успешным результатом покупки.
-- totalCost: string - общая стоимость покупки
-- buttonNext: HTMLButtonElement - кнопка "За новыми покупками"
 
 Методы:
 
-- close(): void - закрывает модальное окно по нажатию на кнопку.
-- counterTotalCost(): string - высчитывает общую стоимость покупки. Возвращает строку, представляющую общую стоимость покупки.
+
 
 ### Класс Page
 

@@ -1,7 +1,7 @@
 import { IActions, ISuccess } from '../types';
 import { cloneTemplate, ensureElement } from '../utils/utils';
 
-export class Success {
+export class Success implements ISuccess {
 	successContent: HTMLElement;
 	button: HTMLButtonElement;
 	orderSuccessDescription: HTMLParagraphElement;

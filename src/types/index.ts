@@ -13,6 +13,10 @@ export interface IActions {
 	onClick(evt: MouseEvent): void;
 }
 
+export interface IActionInput {
+	onInput(evt: Event): void;
+}
+
 export interface IWebLarekApi {
 	getCardList(): Promise<ProductItem[]>;
 	getCardById(id: string): Promise<ProductItem>;
@@ -76,25 +80,25 @@ export interface IForm {
 }
 
 export interface IContactForm {
-	template: HTMLElement;
-	setPhone(value: string): void;
-	setEmail(value: string): void;
+	contactFormContent: HTMLElement;
+	inputEmail: HTMLInputElement;
+	inputPhone: HTMLInputElement;
+	buttonPay: HTMLButtonElement;
 }
 
 export interface IDeliveryForm {
-	template: HTMLElement;
+	deliveryFormContent: HTMLElement;
+	inputAddress: HTMLInputElement;
 	buttonCard: HTMLButtonElement;
 	buttonCash: HTMLButtonElement;
-	toggleButton(): void;
-	setAddress(value: string): void;
+	buttonNext: HTMLButtonElement;
+	toggleButtonActivity(): void;
 }
 
 export interface ISuccess {
-	template: HTMLElement;
-	totalCost: string;
-	buttonNext: HTMLButtonElement;
-	close(): void;
-	counterTotalCost(): string;
+	successContent: HTMLElement;
+	button: HTMLButtonElement;
+	orderSuccessDescription: HTMLParagraphElement;
 }
 
 export interface IPage {
