@@ -19,7 +19,6 @@ export interface IActionInput {
 
 export interface IWebLarekApi {
 	getCardList(): Promise<ProductItem[]>;
-	getCardById(id: string): Promise<ProductItem>;
 }
 
 export interface IBasketModel {
@@ -72,6 +71,7 @@ export interface IBasket {
 	counterTotalCost(cardPrice: number): void;
 	updateBasket(): void;
 	setCards(items: HTMLElement[]): void;
+	changeButtonActivity(): void
 }
 
 export interface IForm {
@@ -84,6 +84,7 @@ export interface IContactForm {
 	inputEmail: HTMLInputElement;
 	inputPhone: HTMLInputElement;
 	buttonPay: HTMLButtonElement;
+	toggleButtonActivity(): void
 }
 
 export interface IDeliveryForm {
@@ -99,6 +100,7 @@ export interface ISuccess {
 	successContent: HTMLElement;
 	button: HTMLButtonElement;
 	orderSuccessDescription: HTMLParagraphElement;
+	setOrderDescription(sum:HTMLElement): void;
 }
 
 export interface IPage {

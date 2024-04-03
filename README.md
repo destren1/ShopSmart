@@ -128,7 +128,9 @@ type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 
 - post(uri: string, data: object, method: ApiPostMethods = 'POST'): Выполняет POST запрос по указанному url с переданными данными data и возвращает Promise с результатом запроса.
 
-## Работа с данными
+## Модели данных(Model)
+
+_Архитектурный слой необходимый для хранения и изменения данных._
 
 ### Класс WebLarekApi:
 
@@ -141,7 +143,6 @@ WebLarekApi предназначен для получения данных ка
 interface IWebLarekApi {
 	cdn: string;
 	getCardList(): Promise<ProductItem[]>
-	getCardById(id:string): Promise<ProductItem>
 }
 ```
 
@@ -165,8 +166,6 @@ type ProductItem = {
   Методы:
 
 - getCardList(): ProductItem[] - Получает массив данных карточек с сервера и возвращает его. Каждый элемент массива представляет объект с данными карточки товара.
-
-- getCardById(id: string): ProductItem - Получает данные карточки товара по указанному идентификатору id с сервера и возвращает их.
 
 ### Класс BasketModel:
 
@@ -212,7 +211,9 @@ interface ICatalogModel {
 
 - addToCatalog(items: ProductItem[]): void - Добавляет указанные товары items в каталог.
 
-## Работа с отображением
+## Компоненты отображения(View)
+
+_Архитектурный слой необходимый для отображения данных на странице._
 
 ### Класс Card
 
@@ -300,9 +301,8 @@ interface IActions {
 
 ContentModal отображает модальное окно, заполненное предоставленным шаблоном.
 
-Наследуется от класса Component и Modal:
-ContentModal наследует функциональность от класса Component, что позволяет ему использовать методы для работы с DOM-элементами, а также от класса Modal, что позволяет использовать методы открытия и закрытия.
-Наследует функциональность от класса EventEmitter, что позволяет ему использовать методы для работы с событиями.
+Наследуется от класса Modal:
+ContentModal наследует функциональность от класса Modal, что позволяет использовать методы открытия и закрытия.
 
 Реализуется на основе интерфейса:
 
@@ -355,6 +355,7 @@ interface IBasket {
 	counterTotalCost(basketCard:HTMLElement): void;
 	updateBasket(): void;
 	setCards(): void;
+	changeButtonActivity(): void;
 }
 ```
 
@@ -376,11 +377,11 @@ interface IBasket {
 - counterTotalCost(cardPrice: number): void - метод для расчета общей стоимости корзины.
 - setCards(): void - устанавливает карточки в корзину.
 - updateBasket(): void - обновляет содержимое корзины.
+- changeButtonActivity(): void - меняет активность кнопки на основании содержимого.
 
 ### Класс ContactForm
 
 ContactForm представляет собой класс, который принимает шаблон модального окна в качестве аргумента конструктора. Этот шаблон содержит формы для ввода контактной информации, такой как телефон и адрес электронной почты
-
 
 Реализуется на основе интерфейса:
 
@@ -390,15 +391,22 @@ interface IContactForm {
 	inputEmail: HTMLInputElement;
 	inputPhone: HTMLInputElement;
 	buttonPay: HTMLButtonElement;
+	toggleButtonActivity(): void;
 }
 ```
 
-Предоставляет поля:
+Предоставляет поля и методы:
+
+Поля:
 
 - contactFormContent: HTMLElement - контент из шаблона contactFormTemplate;
 - inputEmail: HTMLInputElement - поле ввода почты.
 - inputPhone: HTMLInputElement - поле ввода номера телефона.
 - buttonPay: HTMLButtonElement - кнопка "Оплатить".
+
+Методы:
+
+- toggleButtonActivity(): void - переключает активность кнопки "Оплатить" в зависимости от условий.
 
 ### Класс DeliveryForm
 
@@ -424,7 +432,7 @@ interface IDeliveryForm {
 - deliveryFormContent: HTMLElement - контент из шаблона deliveryFormTemplate.
 - inputAddress: HTMLInputElement - поле ввода, содержащее адрес.
 - buttonCard: HTMLButtonElement - кнопка "Оплата картой"
-- buttonCash: HTMLButtonElement - кнопка  "Оплата за наличные"
+- buttonCash: HTMLButtonElement - кнопка "Оплата за наличные"
 - buttonNext: HTMLButtonElement - кнопка "Далее"
 
 Методы:
@@ -435,9 +443,6 @@ interface IDeliveryForm {
 
 Success представляет собой класс, который принимает шаблон (template) модального окна с отображающего информацию об успешном завершении покупки.
 
-Наследуется от класса Component:
-ContentModal наследует функциональность от класса Component, что позволяет ему использовать методы для работы с DOM-элементами.
-
 Реализуется на основе интерфейса:
 
 ```
@@ -445,26 +450,25 @@ interface ISuccess {
 	successContent: HTMLElement;
 	button: HTMLButtonElement;
 	orderSuccessDescription: HTMLParagraphElement;
+	setOrderDescription(sum:HTMLElement): void;
 }
 ```
 
 Предоставляет методы и поля:
 
 Поля:
+
 - successContent: HTMLElement - контент из шаблона SuccessTemplate;
 - button: HTMLButtonElement - кнопка "За новыми покупками!"
 - orderSuccessDescription: HTMLParagraphElement - общая стоимость корзины.
 
-
 Методы:
 
-
+- setOrderDescription(sum:HTMLElement): void - устанавливает суммарную стоимость товаров.
 
 ### Класс Page
 
 Page представляет собой класс для отображения страницы с карточками и счётчика корзины.
-
-Наследует функциональность от класса EventEmitter, что позволяет ему использовать методы для работы с событиями.
 
 Реализуется на основе интерфейса IPage:
 
@@ -496,3 +500,25 @@ interface IPage {
 - setCatalog(items: HTMLElement[]): void - устанавливает содержимое поля catalog.
 - lockPage(): void - блокировка прокрутки страницы.
 - unlockPage(): void - разблокировка прокрутки страницы.
+
+## Компоненты представления(Presenter)
+
+*Архитектурный слой необходимый для связывания слоя Model и слоя View.*
+
+Презентером выступает основной файл index.ts, который регулирует взаимодействие между отображением и данными путем подписки на события через брокер событий (экземпляр класса EventEmitter).
+
+### Список событий:
+
+- `'Card:open'` - Открытие карточки товара.
+- `'Modal:close'` - Закрытие модального окна.
+- `'Basket:addItem'` - Добавление товара в корзину.
+- `'Basket:open'` - Открытие корзины.
+- `'Card:delete'`: Удаление товара из корзины.
+- `'DeliveryForm:open'` - Открытие формы доставки.
+- `'Button-card:active'` - Активация кнопки оплаты картой.
+- `'Button-cash:active'` - Активация кнопки оплаты наличными.
+- `'Input:change'` - Изменение поля ввода доставки.
+- `'ContactForm:open'` - Открытие формы контактов.
+- `'Input:triggered'` - Изменение поля ввода почты или телефона.
+- `'Success:open'` - Открытие сообщения об успешной покупке.
+- `'Success:close'` - Закрытие сообщения об успешной покупке.

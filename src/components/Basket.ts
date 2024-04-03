@@ -30,11 +30,8 @@ export class Basket extends Component<HTMLElement> {
 		this.basketPrice = ensureElement('.basket__price', this.basket);
 		this.basketList = ensureElement('.basket__list', this.basket);
 		this.basketButton = ensureElement('.basket__button', this.basket);
-		console.log(this.basketButton);
 		if (this.basket) {
-			this.basketButton.addEventListener(
-				'click', actions.onClick
-			);
+			this.basketButton.addEventListener('click', actions.onClick);
 		}
 	}
 
@@ -42,8 +39,6 @@ export class Basket extends Component<HTMLElement> {
 		if (this.basketList.lastChild) {
 			this.basketList.removeChild(this.basketList.lastChild);
 		}
-		console.log(`список карточек ${this.cardsBasket}`)
-		console.log(this.cardsBasket)
 		this.cardsBasket.forEach((item) => {
 			this.basketList.append(item);
 		});
@@ -68,7 +63,11 @@ export class Basket extends Component<HTMLElement> {
 		this.basketPrice.textContent = `${totalCost} синапсов`;
 	}
 
-	set total(total: number) {
-		this.setText(this.basketPrice, total + ' синапсов');
+	changeButtonActivity(): void {
+		if (this.cardsBasket.length === 0) {
+			this.basketButton.setAttribute('disabled', 'true');
+		} else {
+			this.basketButton.removeAttribute('disabled');
+		}
 	}
 }

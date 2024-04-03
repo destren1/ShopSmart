@@ -5,6 +5,7 @@ export class Success implements ISuccess {
 	successContent: HTMLElement;
 	button: HTMLButtonElement;
 	orderSuccessDescription: HTMLParagraphElement;
+	orderDescription: HTMLParagraphElement;
 
 	constructor(successTemplate: HTMLTemplateElement, actions: IActions) {
 		this.successContent = cloneTemplate(successTemplate);
@@ -17,5 +18,9 @@ export class Success implements ISuccess {
 			this.successContent
 		);
 		this.button.addEventListener('click', actions.onClick);
+	}
+
+	setOrderDescription(sum: HTMLElement): void {
+		this.orderSuccessDescription.textContent = `Списано ${sum.textContent}`;
 	}
 }
