@@ -120,9 +120,11 @@ eventEmitter.on('Basket:open', () => {
 });
 
 // Действие удаления карточки в корзине по клику.
-eventEmitter.on('Card:delete', () => {
-	
-	basket.counterTotalCost()
+eventEmitter.on('Card:delete', (item: ProductItem) => {
+	basketModel.removeFromBasket(item);
+	basket.updateBasket();
+	console.log(basket.basket);
+	basket.counterTotalCost();
 });
 
 // Действие открытия модального окна с формой доставки.

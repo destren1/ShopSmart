@@ -148,6 +148,7 @@ WebLarekApi предназначен для получения данных ка
 interface IWebLarekApi {
 	cdn: string;
 	getCardList(): Promise<ProductItem[]>
+	orderPurchase(order: ApiListResponse<string>): void
 }
 ```
 
@@ -171,6 +172,7 @@ type ProductItem = {
   Методы:
 
 - `getCardList(): ProductItem[]` - Получает массив данных карточек с сервера и возвращает его. Каждый элемент массива представляет объект с данными карточки товара.
+- `orderPurchase(order: ApiListResponse<string>): void` - отправляет put-запрос на сервер с заказом.
 
 ### Класс BasketModel:
 
@@ -182,7 +184,7 @@ BasketModel отвечает за хранение данных корзины �
 interface IBasketModel {
 	basket: ProductItem[]
 	addToBasket(item: ProductItem): void
-	removeFromBasket(id: string): void
+	removeFromBasket(item: ProductItem): void
 	clearBasket(): void
 }
 ```

@@ -2,7 +2,6 @@ import { IActions, ICard } from '../types/index';
 import { Component } from '../components/base/components';
 import { ProductItem } from '../types/index';
 import { ensureElement, cloneTemplate } from '../utils/utils';
-import { EventEmitter } from './base/events';
 
 export class Card extends Component<ProductItem> implements ICard {
 	container: HTMLElement;
@@ -14,7 +13,11 @@ export class Card extends Component<ProductItem> implements ICard {
 	button?: HTMLButtonElement;
 	actions: IActions;
 
-	constructor(container: HTMLTemplateElement, actions?: IActions,actionDelete?:IActions) {
+	constructor(
+		container: HTMLTemplateElement,
+		actions?: IActions,
+		actionDelete?: IActions
+	) {
 		super(container);
 		this.actions = actions;
 		this.container = cloneTemplate(container);
@@ -27,8 +30,8 @@ export class Card extends Component<ProductItem> implements ICard {
 		this.category = this.container.querySelector('.card__category');
 		this.price = ensureElement<HTMLSpanElement>('.card__price', this.container);
 		this.button = this.container.querySelector('.basket__item-delete');
-		if(this.button) {
-		this.button.addEventListener('click',actionDelete.onClick)
+		if (this.button) {
+			this.button.addEventListener('click', actionDelete.onClick);
 		}
 	}
 
