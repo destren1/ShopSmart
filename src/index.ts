@@ -26,14 +26,13 @@ const modal = ensureElement<HTMLDivElement>('#modal-container');
 // Экземпляры классов.
 const webLarekApi = new WebLarekApi(CDN_URL, API_URL);
 const catalogModel = new CatalogModel();
-const basketModel = new BasketModel();
 const page = new Page({
 	onClick: () => {
 		eventEmitter.emit('Basket:open');
 	},
 });
 const eventEmitter = new EventEmitter();
-const contentModal = new ContentModal(modal, {
+const contentModal = new ContentModal(modal, page, {
 	onClick: () => eventEmitter.emit('Modal:close'),
 });
 const deliveryForm = new DeliveryForm(
@@ -55,12 +54,16 @@ const contactForm = new ContactForm(
 const success = new Success(successTemplate, {
 	onClick: () => eventEmitter.emit('Success:close'),
 });
+const basketModel = new BasketModel(null, page, contentModal);
+
 const basket = new Basket(
 	basketTemplate,
 	basketModel,
 	{ onClick: () => eventEmitter.emit('DeliveryForm:open') },
 	eventEmitter
 );
+
+basketModel.basket = basket;
 
 // Отображение всех карточек на странице.
 webLarekApi.getCardList().then((cards) => {
@@ -91,25 +94,16 @@ eventEmitter.on('Card:open', (card: ProductItem) => {
 	});
 
 	contentModal.show();
-	page.lockPage();
 });
 
 //Действие при закрытии модального окна.
 eventEmitter.on('Modal:close', () => {
 	contentModal.close();
-	page.unlockPage();
-	contentModal.clearModalContent();
 });
 
 // Действие при нажатии на кнопку "В корзину".
 eventEmitter.on('Basket:addItem', (card: ProductItem) => {
 	basketModel.addToBasket(card);
-	basket.updateBasket();
-	page.updateCounter();
-	contentModal.close();
-	page.unlockPage();
-	contentModal.clearModalContent();
-	basket.counterTotalCost();
 });
 
 // Действие при нажатии на корзину.
@@ -124,7 +118,6 @@ eventEmitter.on('Card:delete', (item: ProductItem) => {
 	basketModel.removeFromBasket(item);
 	basket.updateBasket();
 	basket.changeButtonActivity();
-	basket.counterTotalCost();
 });
 
 // Действие открытия модального окна с формой доставки.
@@ -180,10 +173,8 @@ eventEmitter.on('Success:open', () => {
 
 // Действие закрытия модального окна с успешной покупкой.
 eventEmitter.on('Success:close', () => {
-	contentModal.clearModalContent();
 	contentModal.close();
 	page.clearCounter();
 	basketModel.clearBasket();
 	basket.updateBasket();
-	basket.counterTotalCost();
 });

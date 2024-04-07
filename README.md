@@ -194,6 +194,9 @@ interface IBasketModel {
 Поля:
 
 - `basket: ProductItem[]` - Поле для хранения элементов корзины. Это массив объектов ProductItem, каждый из которых представляет товар в корзине.
+- `basket: Basket` - экземпляр класса Basket.
+- `page: Page` - экземпляр класса Page.
+- `contentModal: ContentModal` - экземпляр класса ContentModal.
 
 Методы:
 
@@ -326,7 +329,9 @@ interface IContentModal {
 	content: HTMLElement;
 	modalContent: HTMLElement;
 	button: HTMLButtonElement;
-	show: void;
+	page: Page;
+	show(): void;
+	close(): void;
 	setContent(content: HTMLElement): void
 	setButton(button: HTMLButtonElement, actions: IActions): void
 	clearModalContent(): void
@@ -340,10 +345,12 @@ interface IContentModal {
 - `container: HTMLDivElement` - контент для вставки в модальное окно.
 - `modalContent: HTMLElement` - модальное окно.
 - `button: HTMLButtonElement` - кнопка.
+- `page: Page` - экземпляр класса Page.
 
 Методы:
 
 - `show(): void` - расширяет метод show() родителя.
+- `close(): void` - расширяет метод close() родителя.
 - `setContent(content: HTMLElement): void` - устанавливает контент для вставки в модальное окно.
 - `clearModalContent(): void` - очищает контент в модальном окне.
 - `setButton(button: HTMLButtonElement, actions: IActions): void` - установка кнопки в поле button.

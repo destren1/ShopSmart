@@ -1,22 +1,30 @@
 import { IActions, IContentModal } from '../types';
-import { cloneTemplate, ensureElement } from '../utils/utils';
-import { Component } from './base/components';
+import { ensureElement } from '../utils/utils';
+import { Page } from './Page';
 import { Modal } from './common/Modal';
 
-// с наследованием component вопрос решить
 export class ContentModal extends Modal implements IContentModal {
 	content: HTMLElement;
 	modalContent: HTMLElement;
 	button: HTMLButtonElement;
+	page: Page;
 
-	constructor(modalContainer: HTMLElement, actions?: IActions) {
+	constructor(modalContainer: HTMLElement, page: Page, actions?: IActions) {
 		super(modalContainer, actions);
 		this.modalContent = ensureElement('.modal__content', modalContainer);
+		this.page = page;
 	}
 
 	show(): void {
 		this.modalContent.append(this.content);
 		super.show();
+		this.page.lockPage();
+	}
+
+	close(): void {
+		super.close();
+		this.page.unlockPage();
+		this.clearModalContent();
 	}
 
 	setContent(content: HTMLElement): void {

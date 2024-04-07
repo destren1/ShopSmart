@@ -1,4 +1,7 @@
+import { Basket } from '../components/Basket';
 import { BasketModel } from '../components/BasketModel';
+import { ContentModal } from '../components/ContentModal';
+import { Page } from '../components/Page';
 import { ApiListResponse } from '../components/base/api';
 
 export type ProductItem = {
@@ -24,7 +27,10 @@ export interface IWebLarekApi {
 }
 
 export interface IBasketModel {
-	basket: ProductItem[];
+	basketItems: ProductItem[];
+	basket: Basket;
+	page: Page;
+	contentModal: ContentModal;
 	addToBasket(item: ProductItem): void;
 	removeFromBasket(item: ProductItem): void;
 	clearBasket(): void;
@@ -58,6 +64,9 @@ export interface IContentModal {
 	content: HTMLElement;
 	modalContent: HTMLElement;
 	button: HTMLButtonElement;
+	page: Page;
+	show(): void;
+	close(): void;
 	setContent(content: HTMLElement): void;
 	setButton(button: HTMLButtonElement, actions: IActions): void;
 	clearModalContent(): void;
