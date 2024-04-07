@@ -123,7 +123,7 @@ eventEmitter.on('Basket:open', () => {
 eventEmitter.on('Card:delete', (item: ProductItem) => {
 	basketModel.removeFromBasket(item);
 	basket.updateBasket();
-	console.log(basket.basket);
+	basket.changeButtonActivity();
 	basket.counterTotalCost();
 });
 
@@ -182,7 +182,7 @@ eventEmitter.on('Success:open', () => {
 eventEmitter.on('Success:close', () => {
 	contentModal.clearModalContent();
 	contentModal.close();
-	page.counter.textContent = '0';
+	page.clearCounter();
 	basketModel.clearBasket();
 	basket.updateBasket();
 	basket.counterTotalCost();

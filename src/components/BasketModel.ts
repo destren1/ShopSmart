@@ -11,7 +11,7 @@ export class BasketModel implements IBasketModel {
 	}
 
 	removeFromBasket(item: ProductItem): void {
-		this.basket.filter((card) => card.id !== item.id);
+		this.basket = this.basket.filter((card) => card.id !== item.id);
 	}
 
 	getTotalCost(): number {

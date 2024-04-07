@@ -37,7 +37,7 @@ export class Basket extends Component<HTMLElement> implements IBasket {
 
 	setCards(): void {
 		if (this.basketList.lastChild) {
-			this.basketList.removeChild(this.basketList.lastChild);
+			this.basketList.textContent = ''
 		}
 		this.cardsBasket.forEach((item) => {
 			this.basketList.append(item);

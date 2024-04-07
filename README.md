@@ -90,7 +90,7 @@ type EmitterEvent = {
 
 ### Класс Component
 
-Класс Component предоставляет удобный инструментарий для работы с DOM-элементами. 
+Класс Component предоставляет удобный инструментарий для работы с DOM-элементами.
 
 **Предоставляет методы:**
 
@@ -492,8 +492,9 @@ interface IPage {
 	counter: HTMLElement
 	catalog: HTMLElement
 	pageWrapper: HTMLElement
-	basketButton: HTMLButtonElement;
+	basketButton: HTMLButtonElement
 	updateCounter(value: number): void
+	clearCounter(): void
 	setCatalog(items: HTMLElement[]): void
 	lockPage(): void
 	unlockPage(): void
@@ -512,13 +513,14 @@ interface IPage {
 Методы:
 
 - `updateCounter(value: number): void` - представляет метод для обновления счётчика корзины.
+- `clearCounter(): void` - очищает счётчик корзины.
 - `setCatalog(items: HTMLElement[]): void` - устанавливает содержимое поля catalog.
 - `lockPage(): void` - блокировка прокрутки страницы.
 - `unlockPage(): void` - разблокировка прокрутки страницы.
 
 ## Компоненты представления(Presenter)
 
-*Архитектурный слой необходимый для связывания слоя Model и слоя View.*
+_Архитектурный слой необходимый для связывания слоя Model и слоя View._
 
 Презентером выступает основной файл index.ts, который регулирует взаимодействие между отображением и данными путем подписки на события через брокер событий (экземпляр класса EventEmitter).
 

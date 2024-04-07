@@ -39,14 +39,18 @@ export class Card extends Component<ProductItem> implements ICard {
 		this.setText(this.title, data.title);
 		this.setText(this.category, data.category);
 
-		if (this.category.textContent === 'другое') {
-			this.category.classList.add('card__category_other');
-		} else if (this.category.textContent === 'хард-скил') {
-			this.category.classList.add('card__category_hard');
-		} else if (this.category.textContent === 'кнопка') {
-			this.category.classList.add('card__category_button');
-		} else if (this.category.textContent === 'дополнительное') {
-			this.category.classList.add('card__category_additional');
+		if (this.category) {
+			if (this.category.textContent === 'другое') {
+				this.category.classList.add('card__category_other');
+			} else if (this.category.textContent === 'хард-скил') {
+				this.category.classList.add('card__category_hard');
+			} else if (this.category.textContent === 'софт-скил') {
+				this.category.classList.add('card__category_soft');
+			} else if (this.category.textContent === 'кнопка') {
+				this.category.classList.add('card__category_button');
+			} else if (this.category.textContent === 'дополнительное') {
+				this.category.classList.add('card__category_additional');
+			}
 		}
 
 		this.setText(this.price, `${data.price} синапсов`);
