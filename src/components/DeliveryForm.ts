@@ -35,6 +35,20 @@ export class DeliveryForm implements IDeliveryForm {
 		this.inputAddress.addEventListener('input', actionToggleButton.onInput);
 	}
 
+	toggleButtonCardActivity(): void {
+		if (this.buttonCash.classList.contains('button_alt-active')) {
+			this.buttonCard.classList.toggle('button_alt-active');
+			this.buttonCash.classList.toggle('button_alt-active');
+		}
+	}
+
+	toggleButtonCashActivity(): void {
+		if (this.buttonCard.classList.contains('button_alt-active')) {
+			this.buttonCard.classList.toggle('button_alt-active');
+			this.buttonCash.classList.toggle('button_alt-active');
+		}
+	}
+
 	toggleButtonActivity(): void {
 		if (
 			(this.buttonCard.classList.contains('button_alt-active') ||

@@ -10,8 +10,7 @@ export class BasketModel implements IBasketModel {
 	page: Page;
 	contentModal: ContentModal;
 
-	constructor(basket: Basket, page: Page, contentModal: ContentModal) {
-		this.basket = basket;
+	constructor(page: Page, contentModal: ContentModal) {
 		this.page = page;
 		this.contentModal = contentModal;
 	}
@@ -27,6 +26,9 @@ export class BasketModel implements IBasketModel {
 
 	removeFromBasket(item: ProductItem): void {
 		this.basketItems = this.basketItems.filter((card) => card.id !== item.id);
+		this.basket.updateBasket();
+		this.basket.changeButtonActivity();
+		this.page.updateCounter();
 	}
 
 	getTotalCost(): number {
@@ -37,5 +39,7 @@ export class BasketModel implements IBasketModel {
 
 	clearBasket(): void {
 		this.basketItems = [];
+		this.basket.updateBasket();
+		this.page.updateCounter();
 	}
 }

@@ -1,11 +1,13 @@
 import { IActions, IPage } from '../types';
 import { ensureElement } from '../utils/utils';
+import { BasketModel } from './BasketModel';
 
 export class Page implements IPage {
 	counter: HTMLElement;
 	catalog: HTMLElement;
 	pageWrapper: HTMLElement;
 	basketButton: HTMLButtonElement;
+	basketModel: BasketModel
 
 	constructor(actions: IActions) {
 		this.counter = ensureElement('.header__basket-counter ');
@@ -16,13 +18,7 @@ export class Page implements IPage {
 	}
 
 	updateCounter(): void {
-		let currentValue: number = parseInt(this.counter.textContent);
-		currentValue++;
-		this.counter.textContent = currentValue.toString();
-	}
-
-	clearCounter(): void {
-		this.counter.textContent = '0';
+		this.counter.textContent = this.basketModel.basketItems.length.toString()
 	}
 
 	setCatalog(items: HTMLElement[]): void {

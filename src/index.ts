@@ -54,7 +54,8 @@ const contactForm = new ContactForm(
 const success = new Success(successTemplate, {
 	onClick: () => eventEmitter.emit('Success:close'),
 });
-const basketModel = new BasketModel(null, page, contentModal);
+const basketModel = new BasketModel(page, contentModal);
+page.basketModel = basketModel;
 
 const basket = new Basket(
 	basketTemplate,
@@ -81,9 +82,7 @@ webLarekApi.getCardList().then((cards) => {
 // Действие при открытии карточки.
 eventEmitter.on('Card:open', (card: ProductItem) => {
 	const previewCard = new Card(previewCardTemplate);
-	contentModal.clearModalContent();
 	const renderedPreviewCard = previewCard.render(card);
-	contentModal.setContent(renderedPreviewCard);
 
 	const buttonAddToBasket = ensureElement<HTMLButtonElement>(
 		'.card__button',
@@ -93,7 +92,7 @@ eventEmitter.on('Card:open', (card: ProductItem) => {
 		onClick: () => eventEmitter.emit('Basket:addItem', card),
 	});
 
-	contentModal.show();
+	contentModal.show(renderedPreviewCard);
 });
 
 //Действие при закрытии модального окна.
@@ -108,41 +107,30 @@ eventEmitter.on('Basket:addItem', (card: ProductItem) => {
 
 // Действие при нажатии на корзину.
 eventEmitter.on('Basket:open', () => {
-	contentModal.setContent(basket.basket);
 	basket.changeButtonActivity();
-	contentModal.show();
+	contentModal.show(basket.basket);
 });
 
 // Действие удаления карточки в корзине по клику.
 eventEmitter.on('Card:delete', (item: ProductItem) => {
 	basketModel.removeFromBasket(item);
-	basket.updateBasket();
-	basket.changeButtonActivity();
 });
 
 // Действие открытия модального окна с формой доставки.
 eventEmitter.on('DeliveryForm:open', () => {
-	contentModal.clearModalContent();
-	contentModal.setContent(deliveryForm.deliveryFormContent);
 	deliveryForm.buttonCard.classList.toggle('button_alt-active');
-	contentModal.show();
+	contentModal.show(deliveryForm.deliveryFormContent);
 });
 
 // Действие добавления 'класса активности' кнопке buttonCard.
 eventEmitter.on('Button-card:active', () => {
-	if (deliveryForm.buttonCash.classList.contains('button_alt-active')) {
-		deliveryForm.buttonCard.classList.toggle('button_alt-active');
-		deliveryForm.buttonCash.classList.toggle('button_alt-active');
-	}
+	deliveryForm.toggleButtonCardActivity();
 	deliveryForm.toggleButtonActivity();
 });
 
 // Действие добавления 'класса активности' кнопке buttonCash.
 eventEmitter.on('Button-cash:active', () => {
-	if (deliveryForm.buttonCard.classList.contains('button_alt-active')) {
-		deliveryForm.buttonCash.classList.toggle('button_alt-active');
-		deliveryForm.buttonCard.classList.toggle('button_alt-active');
-	}
+	deliveryForm.toggleButtonCashActivity();
 	deliveryForm.toggleButtonActivity();
 });
 
@@ -153,9 +141,7 @@ eventEmitter.on('Input:change', () => {
 
 // Действие открытия модального окна с формой контактов.
 eventEmitter.on('ContactForm:open', () => {
-	contentModal.clearModalContent();
-	contentModal.setContent(contactForm.contactFormContent);
-	contentModal.show();
+	contentModal.show(contactForm.contactFormContent);
 });
 
 // Действие при изменении полей ввода почты и телефона.
@@ -165,16 +151,12 @@ eventEmitter.on('Input:triggered', () => {
 
 // Действие открытия модального окна с успешной покупкой.
 eventEmitter.on('Success:open', () => {
-	contentModal.clearModalContent();
 	success.setOrderDescription(basket.basketPrice);
-	contentModal.setContent(success.successContent);
-	contentModal.show();
+	contentModal.show(success.successContent);
 });
 
 // Действие закрытия модального окна с успешной покупкой.
 eventEmitter.on('Success:close', () => {
 	contentModal.close();
-	page.clearCounter();
 	basketModel.clearBasket();
-	basket.updateBasket();
 });

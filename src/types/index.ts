@@ -56,7 +56,7 @@ export interface ICard {
 export interface IModal {
 	container: HTMLElement;
 	closeButton: HTMLElement;
-	show(): void;
+	show(content: HTMLElement): void;
 	close(): void;
 }
 
@@ -65,11 +65,9 @@ export interface IContentModal {
 	modalContent: HTMLElement;
 	button: HTMLButtonElement;
 	page: Page;
-	show(): void;
+	show(content: HTMLElement): void;
 	close(): void;
-	setContent(content: HTMLElement): void;
 	setButton(button: HTMLButtonElement, actions: IActions): void;
-	clearModalContent(): void;
 }
 
 export interface IBasket {
@@ -105,6 +103,8 @@ export interface IDeliveryForm {
 	buttonCash: HTMLButtonElement;
 	buttonNext: HTMLButtonElement;
 	toggleButtonActivity(): void;
+	toggleButtonCardActivity(): void;
+	toggleButtonCashActivity(): void
 }
 
 export interface ISuccess {
@@ -120,7 +120,6 @@ export interface IPage {
 	pageWrapper: HTMLElement;
 	basketButton: HTMLButtonElement;
 	updateCounter(): void;
-	clearCounter(): void;
 	setCatalog(items: HTMLElement[]): void;
 	lockPage(): void;
 	unlockPage(): void;

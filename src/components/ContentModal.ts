@@ -15,9 +15,11 @@ export class ContentModal extends Modal implements IContentModal {
 		this.page = page;
 	}
 
-	show(): void {
+	show(content: HTMLElement): void {
+		this.clearModalContent();
+		this.setContent(content);
 		this.modalContent.append(this.content);
-		super.show();
+		super.show(content);
 		this.page.lockPage();
 	}
 
@@ -27,7 +29,7 @@ export class ContentModal extends Modal implements IContentModal {
 		this.clearModalContent();
 	}
 
-	setContent(content: HTMLElement): void {
+	private setContent(content: HTMLElement): void {
 		this.content = content;
 	}
 
@@ -36,7 +38,7 @@ export class ContentModal extends Modal implements IContentModal {
 		this.button.addEventListener('click', actions.onClick);
 	}
 
-	clearModalContent(): void {
+	private clearModalContent(): void {
 		if (this.content && this.modalContent.contains(this.content)) {
 			this.modalContent.removeChild(this.content);
 		}

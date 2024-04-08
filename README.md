@@ -290,7 +290,7 @@ interface IModal {
 	container: HTMLElement;
 	closeButton: HTMLElement
 	actions: IActions
-	show(): void
+	show(content: HTMLElement): void
 	close(): void
 }
 ```
@@ -311,7 +311,7 @@ interface IActions {
 
 Методы:
 
-- `show(): void` - служит для открытия модального окна.
+- `show(content: HTMLElement): void` - служит для открытия модального окна.
 
 - `close(): void` - служит для закрытия модального окна.
 
@@ -330,11 +330,9 @@ interface IContentModal {
 	modalContent: HTMLElement;
 	button: HTMLButtonElement;
 	page: Page;
-	show(): void;
+	show(content: HTMLElement): void;
 	close(): void;
-	setContent(content: HTMLElement): void
 	setButton(button: HTMLButtonElement, actions: IActions): void
-	clearModalContent(): void
 }
 ```
 
@@ -349,10 +347,10 @@ interface IContentModal {
 
 Методы:
 
-- `show(): void` - расширяет метод show() родителя.
+- `show(content: HTMLElement): void` - расширяет метод show() родителя.
 - `close(): void` - расширяет метод close() родителя.
-- `setContent(content: HTMLElement): void` - устанавливает контент для вставки в модальное окно.
-- `clearModalContent(): void` - очищает контент в модальном окне.
+- private `setContent(content: HTMLElement): void` - устанавливает контент для вставки в модальное окно.
+- private `clearModalContent(): void` - очищает контент в модальном окне.
 - `setButton(button: HTMLButtonElement, actions: IActions): void` - установка кнопки в поле button.
 
 ### Класс Basket
@@ -444,6 +442,7 @@ interface IDeliveryForm {
 	buttonCash: HTMLButtonElement;
 	buttonNext: HTMLButtonElement;
 	toggleButtonActivity(): void;
+	toggleButtonAltActivity(): void;
 }
 ```
 
@@ -460,6 +459,8 @@ interface IDeliveryForm {
 Методы:
 
 - `toggleButtonActivity(): void` - переключает активность кнопки "Далее" в зависимости от условий.
+- `toggleButtonCardActivity(): void` - переключает активность кнопки "Карта".
+- `toggleButtonCardActivity(): void` - переключает активность кнопки "Наличные".
 
 ### Класс Success
 
@@ -500,8 +501,7 @@ interface IPage {
 	catalog: HTMLElement
 	pageWrapper: HTMLElement
 	basketButton: HTMLButtonElement
-	updateCounter(value: number): void
-	clearCounter(): void
+	updateCounter(): void
 	setCatalog(items: HTMLElement[]): void
 	lockPage(): void
 	unlockPage(): void
@@ -519,8 +519,7 @@ interface IPage {
 
 Методы:
 
-- `updateCounter(value: number): void` - представляет метод для обновления счётчика корзины.
-- `clearCounter(): void` - очищает счётчик корзины.
+- `updateCounter(): void` - представляет метод для обновления счётчика корзины.
 - `setCatalog(items: HTMLElement[]): void` - устанавливает содержимое поля catalog.
 - `lockPage(): void` - блокировка прокрутки страницы.
 - `unlockPage(): void` - разблокировка прокрутки страницы.
