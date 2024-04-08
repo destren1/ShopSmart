@@ -1,4 +1,8 @@
-# Проектная работа "Веб-ларек"
+# WEB-LAREK
+
+## Краткое описание
+
+"WEB-LAREK" представляет собой онлайн платформу для покупки товаров из каталога. Пользователи могут просматривать ассортимент, выбирать понравившиеся товары и добавлять их в корзину. После этого, они могут ввести свои данные для доставки и оформить покупку.
 
 **Стек:** HTML, SCSS, TS, Webpack
 
@@ -411,6 +415,7 @@ interface IContactForm {
 	inputEmail: HTMLInputElement;
 	inputPhone: HTMLInputElement;
 	buttonPay: HTMLButtonElement;
+	error: HTMLElement;
 	toggleButtonActivity(): void;
 }
 ```
@@ -423,6 +428,7 @@ interface IContactForm {
 - `inputEmail: HTMLInputElement` - поле ввода почты.
 - `inputPhone: HTMLInputElement` - поле ввода номера телефона.
 - `buttonPay: HTMLButtonElement` - кнопка "Оплатить".
+- `error: HTMLElement` - элемент для показа текста ошибки.
 
 Методы:
 
@@ -441,6 +447,7 @@ interface IDeliveryForm {
 	buttonCard: HTMLButtonElement;
 	buttonCash: HTMLButtonElement;
 	buttonNext: HTMLButtonElement;
+	error: HTMLElement;
 	toggleButtonActivity(): void;
 	toggleButtonAltActivity(): void;
 }
@@ -452,9 +459,10 @@ interface IDeliveryForm {
 
 - `deliveryFormContent: HTMLElement` - контент из шаблона deliveryFormTemplate.
 - `inputAddress: HTMLInputElement` - поле ввода, содержащее адрес.
-- `buttonCard: HTMLButtonElement` - кнопка "Оплата картой"
-- `buttonCash: HTMLButtonElement` - кнопка "Оплата за наличные"
-- `buttonNext: HTMLButtonElement` - кнопка "Далее"
+- `buttonCard: HTMLButtonElement` - кнопка "Оплата картой".
+- `buttonCash: HTMLButtonElement` - кнопка "Оплата за наличные".
+- `buttonNext: HTMLButtonElement` - кнопка "Далее".
+- `error: HTMLElement` - элемент для показа текста ошибки.
 
 Методы:
 

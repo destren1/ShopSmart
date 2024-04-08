@@ -93,6 +93,7 @@ export interface IContactForm {
 	inputEmail: HTMLInputElement;
 	inputPhone: HTMLInputElement;
 	buttonPay: HTMLButtonElement;
+	error: HTMLElement;
 	toggleButtonActivity(): void;
 }
 
@@ -102,9 +103,10 @@ export interface IDeliveryForm {
 	buttonCard: HTMLButtonElement;
 	buttonCash: HTMLButtonElement;
 	buttonNext: HTMLButtonElement;
+	error: HTMLElement;
 	toggleButtonActivity(): void;
 	toggleButtonCardActivity(): void;
-	toggleButtonCashActivity(): void
+	toggleButtonCashActivity(): void;
 }
 
 export interface ISuccess {

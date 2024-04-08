@@ -7,6 +7,7 @@ export class DeliveryForm implements IDeliveryForm {
 	buttonCard: HTMLButtonElement;
 	buttonCash: HTMLButtonElement;
 	buttonNext: HTMLButtonElement;
+	error: HTMLElement;
 
 	constructor(
 		deliveryFormTemplate: HTMLTemplateElement,
@@ -33,6 +34,7 @@ export class DeliveryForm implements IDeliveryForm {
 		this.buttonCash.addEventListener('click', actionButtonCash.onClick);
 		this.buttonNext.addEventListener('click', actionNext.onClick);
 		this.inputAddress.addEventListener('input', actionToggleButton.onInput);
+		this.error = ensureElement('.form__errors', this.deliveryFormContent);
 	}
 
 	toggleButtonCardActivity(): void {
@@ -56,8 +58,10 @@ export class DeliveryForm implements IDeliveryForm {
 			this.inputAddress.value.length > 0
 		) {
 			this.buttonNext.removeAttribute('disabled');
+			this.error.textContent = '';
 		} else {
 			this.buttonNext.setAttribute('disabled', 'true');
+			this.error.textContent = 'Необходимо ввести корректные данные';
 		}
 	}
 }
