@@ -108,6 +108,7 @@ eventEmitter.on('Card:open', (card: ProductItem) => {
 
 	if (previewCard.title.textContent === 'Мамка-таймер') {
 		buttonAddToBasket.setAttribute('disabled', 'true');
+		buttonAddToBasket.textContent = 'Данный продукт купить нельзя';
 	}
 
 	if (previewCard.title.textContent === card.title) {
