@@ -2,6 +2,7 @@ import { IActions, ICard } from '../types/index';
 import { Component } from '../components/base/components';
 import { ProductItem } from '../types/index';
 import { ensureElement, cloneTemplate } from '../utils/utils';
+import { BasketModel } from './BasketModel';
 
 export class Card extends Component<ProductItem> implements ICard {
 	container: HTMLElement;
@@ -12,6 +13,8 @@ export class Card extends Component<ProductItem> implements ICard {
 	price: HTMLSpanElement;
 	button?: HTMLButtonElement;
 	actions: IActions;
+	index?: HTMLElement;
+	basketModel?: BasketModel;
 
 	constructor(
 		container: HTMLTemplateElement,
@@ -33,6 +36,7 @@ export class Card extends Component<ProductItem> implements ICard {
 		if (this.button) {
 			this.button.addEventListener('click', actionDelete.onClick);
 		}
+		this.index = this.container.querySelector('.basket__item-index');
 	}
 
 	render(data: ProductItem): HTMLElement {
@@ -54,18 +58,32 @@ export class Card extends Component<ProductItem> implements ICard {
 		}
 
 		this.setText(this.price, `${data.price} синапсов`);
+
+		if (this.title.textContent === 'Мамка-таймер') {
+			this.setText(this.price, 'Бесценно');
+		}
+
 		if (this.image) {
 			this.image.src = data.image;
 			this.image.alt = data.title;
 		}
+
 		if (this.description) {
 			this.setText(this.description, data.description);
 		}
+
+		if (this.index) {
+			this.index.textContent = (
+				this.basketModel.basketItems.indexOf(data) + 1
+			).toString();
+		}
+
 		if (this.actions?.onClick) {
 			if (this.container) {
 				this.container.addEventListener('click', this.actions.onClick);
 			}
 		}
+
 		return this.container;
 	}
 }
