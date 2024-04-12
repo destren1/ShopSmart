@@ -49,7 +49,10 @@ const contactForm = new ContactForm(contactsTemplate, {
 const success = new Success(successTemplate, {
 	handleSuccessClose: () => eventEmitter.emit('Success:close'),
 });
-const basketModel = new BasketModel();
+const basketModel: BasketModel = new BasketModel({
+	handleUpdateBasket: () =>
+		eventEmitter.emit('Basket:update', basketModel.basketItems),
+});
 
 const basket = new Basket(
 	basketTemplate,
@@ -87,7 +90,18 @@ eventEmitter.on('Card:open', (card: ProductItem) => {
 		handleAddItemToBasket: () => eventEmitter.emit('Basket:addItem', card),
 	});
 
-	previewCard.updateAddToCartButton(card, previewCard, basketModel);
+	const isProductInBasket = basketModel.basketItems.find(
+		(item) => item.id === card.id
+	);
+	const isPreviewCardForCurrentProduct =
+		previewCard.title.textContent === card.title;
+	const isProductNotPriceless = previewCard.price.textContent !== 'Бесценно';
+
+	previewCard.updateAddToCardButton(
+		isProductInBasket,
+		isPreviewCardForCurrentProduct,
+		isProductNotPriceless
+	);
 	contentModal.show(renderedPreviewCard);
 	page.lockPage();
 });
@@ -98,17 +112,19 @@ eventEmitter.on('Modal:close', () => {
 	page.unlockPage();
 });
 
-// Действие при нажатии на кнопку "В корзину".
-eventEmitter.on('Basket:addItem', (card: ProductItem) => {
-	basketModel.addToBasket(card);
-
-	basket.cardsBasket = basketModel.basketItems.map((item: ProductItem) => {
+// Действие обновления карточек корзины
+eventEmitter.on('Basket:update', (basketItems: ProductItem[]) => {
+	basket.cardsBasket = basketItems.map((item: ProductItem) => {
 		const basketCard = new Card(cardBasketTemplate, undefined, {
 			handleCardDelete: () => eventEmitter.emit('Card:delete', item),
 		});
 		return basketCard.render(item, basketModel.getCardIndex(item));
 	});
+});
 
+// Действие при нажатии на кнопку "В корзину".
+eventEmitter.on('Basket:addItem', (card: ProductItem) => {
+	basketModel.addToBasket(card);
 	basket.updateBasket();
 	page.updateCounter(basketModel.getBasketItemsLength());
 	contentModal.close();
@@ -124,14 +140,6 @@ eventEmitter.on('Basket:open', () => {
 // Действие удаления карточки в корзине по клику.
 eventEmitter.on('Card:delete', (item: ProductItem) => {
 	basketModel.removeFromBasket(item);
-
-	basket.cardsBasket = basketModel.basketItems.map((item: ProductItem) => {
-		const basketCard = new Card(cardBasketTemplate, undefined, {
-			handleCardDelete: () => eventEmitter.emit('Card:delete', item),
-		});
-		return basketCard.render(item, basketModel.getCardIndex(item));
-	});
-
 	basket.updateBasket();
 	page.updateCounter(basketModel.getBasketItemsLength());
 });
