@@ -54,12 +54,9 @@ const basketModel: BasketModel = new BasketModel({
 		eventEmitter.emit('Basket:update', basketModel.basketItems),
 });
 
-const basket = new Basket(
-	basketTemplate,
-	basketModel,
-	{ handleOpenDeliveryForm: () => eventEmitter.emit('DeliveryForm:open') },
-	eventEmitter
-);
+const basket = new Basket(basketTemplate, basketModel, {
+	handleOpenDeliveryForm: () => eventEmitter.emit('DeliveryForm:open'),
+});
 
 // Отображение всех карточек на странице.
 webLarekApi
@@ -186,15 +183,23 @@ eventEmitter.on('Input:triggered', () => {
 eventEmitter.on('Success:open', () => {
 	basketModel.order.email = contactForm.getInputEmailValue();
 	basketModel.order.phone = contactForm.getInputPhoneValue();
-	webLarekApi.orderPurchase(basketModel.order);
-	success.setOrderDescription(basket.basketPrice);
-	basketModel.clearBasket();
-	basket.updateBasket();
-	page.updateCounter(basketModel.getBasketItemsLength());
+
+	webLarekApi
+		.orderPurchase(basketModel.order)
+		.then((data) => {
+			success.setOrderDescription(data.total);
+			contentModal.show(success.successContent);
+			basketModel.clearBasket();
+			basket.updateBasket();
+			page.updateCounter(basketModel.getBasketItemsLength());
+			deliveryForm.clearDeliveryForm();
+			page.lockPage();
+		})
+		.catch((error) => {
+			console.log(`Произошла ошибка ${error}`);
+		});
+
 	contactForm.clearContactForms();
-	deliveryForm.clearDeliveryForm();
-	contentModal.show(success.successContent);
-	page.lockPage();
 });
 
 // Действие закрытия модального окна с успешной покупкой.

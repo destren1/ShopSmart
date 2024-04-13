@@ -422,7 +422,6 @@ interface IBasket {
 	basketList: HTMLElement;
 	basketModel: BasketModel;
 	basketButton: HTMLElement;
-	eventEmitter: EventEmitter;
 	counterTotalCost(): number;
 	updateBasket(): void;
 	setCards(): void;
@@ -440,7 +439,6 @@ interface IBasket {
 - `basketList: HTMLElement` - список для карточек.
 - `basketModel: BasketModel` - экземпляр класса BasketModel.
 - `basketButton: HTMLElement` - кнопка "Оформить".
-- `eventEmitter: EventEmitter` - экземпляр класса EventEmitter.
 
 Методы:
 
@@ -551,7 +549,7 @@ interface ISuccess {
 
 Методы:
 
-- `setOrderDescription(sum:HTMLElement): void` - устанавливает суммарную стоимость товаров.
+- `setOrderDescription(sum: number): void` - устанавливает суммарную стоимость товаров.
 
 ### Класс Page
 

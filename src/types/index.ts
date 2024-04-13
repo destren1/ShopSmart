@@ -184,7 +184,7 @@ export interface ISuccess {
 	successContent: HTMLElement;
 	button: HTMLButtonElement;
 	orderSuccessDescription: HTMLParagraphElement;
-	setOrderDescription(sum: HTMLElement): void;
+	setOrderDescription(sum: number): void;
 }
 
 export interface IPage {
