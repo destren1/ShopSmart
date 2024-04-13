@@ -23,7 +23,10 @@ export class ContactForm implements IContactForm {
 			'.button',
 			this.contactFormContent
 		);
-		this.buttonPay.addEventListener('click', handlers.handleSuccessOpen);
+		this.contactFormContent.addEventListener(
+			'submit',
+			handlers.handleSuccessOpen
+		);
 		this.inputEmail.addEventListener(
 			'input',
 			handlers.handleToggleButtonActivity
@@ -74,6 +77,7 @@ export class ContactForm implements IContactForm {
 		this.inputEmail.value = '';
 		this.inputPhone.value = '';
 		this.toggleButtonActivity();
+		this.error.textContent = '';
 	}
 
 	getInputEmailValue(): string {

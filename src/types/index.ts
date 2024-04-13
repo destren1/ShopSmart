@@ -44,7 +44,7 @@ export interface IDeliveryFormHandlers {
 }
 
 export interface IContactFormHandlers {
-	handleSuccessOpen: () => void;
+	handleSuccessOpen: (evt: SubmitEvent) => void;
 	handleToggleButtonActivity: () => void;
 }
 

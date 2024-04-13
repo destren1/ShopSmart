@@ -43,7 +43,8 @@ const deliveryForm = new DeliveryForm(orderTemplate, {
 	handleNext: () => eventEmitter.emit('ContactForm:open'),
 });
 const contactForm = new ContactForm(contactsTemplate, {
-	handleSuccessOpen: () => eventEmitter.emit('Success:open'),
+	handleSuccessOpen: (evt: SubmitEvent) =>
+		eventEmitter.emit('Success:open', evt),
 	handleToggleButtonActivity: () => eventEmitter.emit('Input:triggered'),
 });
 const success = new Success(successTemplate, {
@@ -180,7 +181,8 @@ eventEmitter.on('Input:triggered', () => {
 });
 
 // Действие открытия модального окна с успешной покупкой.
-eventEmitter.on('Success:open', () => {
+eventEmitter.on('Success:open', (evt: SubmitEvent) => {
+	evt.preventDefault();
 	basketModel.order.email = contactForm.getInputEmailValue();
 	basketModel.order.phone = contactForm.getInputPhoneValue();
 
@@ -193,13 +195,12 @@ eventEmitter.on('Success:open', () => {
 			basket.updateBasket();
 			page.updateCounter(basketModel.getBasketItemsLength());
 			deliveryForm.clearDeliveryForm();
+			contactForm.clearContactForms();
 			page.lockPage();
 		})
 		.catch((error) => {
 			console.log(`Произошла ошибка ${error}`);
 		});
-
-	contactForm.clearContactForms();
 });
 
 // Действие закрытия модального окна с успешной покупкой.
